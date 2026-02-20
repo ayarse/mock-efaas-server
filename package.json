@@ -11,7 +11,7 @@
     "typescript": "^5"
   },
   "scripts": {
-    "dev": "bun --hot src/index.ts",
+    "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
     "check": "biome check",
     "fix": "biome check --fix",
