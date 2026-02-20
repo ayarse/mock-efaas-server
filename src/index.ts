@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { serveStatic } from "hono/bun";
 import { cors } from "hono/cors";
 import { OAuth2Issuer } from "oauth2-mock-server";
 import type { AppEnv } from "./config.ts";
@@ -45,6 +46,9 @@ app.use("*", async (c, next) => {
   c.set("loginPageHtml", LOGIN_PAGE_HTML);
   await next();
 });
+
+// Static files
+app.use("/public/*", serveStatic({ root: "./" }));
 
 // Home page
 app.get("/", (c) => c.html(HOME_PAGE_HTML));
