@@ -17,6 +17,13 @@ Server starts at `http://localhost:36445`. Configure with environment variables:
 PORT=9000 HOST=0.0.0.0 bun src/index.ts
 ```
 
+### Docker
+
+```bash
+docker build -t nefaas .
+docker run -p 36445:36445 nefaas
+```
+
 ## Endpoints
 
 | Endpoint                            | Method   | Description                        |
@@ -326,10 +333,11 @@ The file should be a JSON array of client objects (same shape as the `POST /mock
 
 ### Environment variables
 
-| Variable       | Default      | Description                          |
-| -------------- | ------------ | ------------------------------------ |
-| `PORT`         | `36445`      | Server port                          |
-| `HOST`         | `localhost`  | Server host                          |
-| `MOCK_PASSWORD`| `@123456`    | Password for the login page          |
-| `USERS_FILE`   | (none)       | Path to a custom users JSON file     |
-| `CLIENTS_FILE` | (none)       | Path to a custom clients JSON file   |
+| Variable       | Default      | Description                                         |
+| -------------- | ------------ | --------------------------------------------------- |
+| `PORT`         | `36445`      | Server port                                         |
+| `HOST`         | `localhost`  | Server listen address                                |
+| `BASE_URL`     | (derived)    | Public-facing base URL (defaults to `http://HOST:PORT`) |
+| `MOCK_PASSWORD`| `@123456`    | Password for the login page                         |
+| `USERS_FILE`   | (none)       | Path to a custom users JSON file                    |
+| `CLIENTS_FILE` | (none)       | Path to a custom clients JSON file                  |
