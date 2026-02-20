@@ -45,6 +45,8 @@ docker run -p 36445:36445 nefaas
 | `/efaas/Account/Login`              | GET/POST | Login page UI                      |
 | `/api/user/photo/:sub`              | GET      | Mock user photo                    |
 
+A [Postman collection](docs/nefaas.postman_collection.json) with pre-configured requests for all endpoints is also available.
+
 ## Authorization Flows
 
 Supports hybrid, authorization code + PKCE, implicit (legacy), client credentials, refresh token, and one-tap login flows. See [docs/FLOWS.md](docs/FLOWS.md) for detailed sequence diagrams.
