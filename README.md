@@ -17,18 +17,18 @@ PORT=9000 HOST=0.0.0.0 bun src/index.ts
 
 ## Endpoints
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/.well-known/openid-configuration` | GET | OIDC Discovery Document |
-| `/.well-known/jwks` | GET | JSON Web Key Set |
-| `/connect/authorize` | GET | Authorization (redirects to login) |
-| `/connect/token` | POST | Token exchange |
-| `/connect/userinfo` | GET | User info claims |
-| `/connect/endsession` | GET | Logout / end session |
-| `/connect/revoke` | POST | Token revocation |
-| `/connect/introspect` | POST | Token introspection |
-| `/efaas/Account/Login` | GET/POST | Login page UI |
-| `/user/photo` | GET | Mock user photo |
+| Endpoint                            | Method   | Description                        |
+| ----------------------------------- | -------- | ---------------------------------- |
+| `/.well-known/openid-configuration` | GET      | OIDC Discovery Document            |
+| `/.well-known/jwks`                 | GET      | JSON Web Key Set                   |
+| `/connect/authorize`                | GET      | Authorization (redirects to login) |
+| `/connect/token`                    | POST     | Token exchange                     |
+| `/connect/userinfo`                 | GET      | User info claims                   |
+| `/connect/endsession`               | GET      | Logout / end session               |
+| `/connect/revoke`                   | POST     | Token revocation                   |
+| `/connect/introspect`               | POST     | Token introspection                |
+| `/efaas/Account/Login`              | GET/POST | Login page UI                      |
+| `/user/photo`                       | GET      | Mock user photo                    |
 
 ## Authorization Flows
 
@@ -253,30 +253,30 @@ sequenceDiagram
 
 ## Scopes & Claims
 
-| Scope | Claims |
-|---|---|
-| `openid` | `sub` |
-| `efaas.profile` | `first_name`, `middle_name`, `last_name`, `first_name_dhivehi`, `middle_name_dhivehi`, `last_name_dhivehi`, `gender`, `idnumber`, `verified`, `verification_type`, `last_verified_date`, `user_type_description`, `updated_at` |
-| `efaas.email` | `email` |
-| `efaas.mobile` | `mobile`, `country_dialing_code` |
-| `efaas.birthdate` | `birthdate` |
-| `efaas.photo` | `photo` |
-| `efaas.work_permit_status` | `is_workpermit_active` |
-| `efaas.passport_number` | `passport` |
-| `efaas.country` | `country_name`, `country_code`, `country_code_alpha3`, `country_dialing_code` |
-| `efaas.permanent_address` | `permanent_address` (JSON string) |
-| `offline_access` | Enables refresh tokens |
-| `profile` | Legacy alias for `efaas.profile` |
+| Scope                      | Claims                                                                                                                                                                                                                         |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `openid`                   | `sub`                                                                                                                                                                                                                          |
+| `efaas.profile`            | `first_name`, `middle_name`, `last_name`, `first_name_dhivehi`, `middle_name_dhivehi`, `last_name_dhivehi`, `gender`, `idnumber`, `verified`, `verification_type`, `last_verified_date`, `user_type_description`, `updated_at` |
+| `efaas.email`              | `email`                                                                                                                                                                                                                        |
+| `efaas.mobile`             | `mobile`, `country_dialing_code`                                                                                                                                                                                               |
+| `efaas.birthdate`          | `birthdate`                                                                                                                                                                                                                    |
+| `efaas.photo`              | `photo`                                                                                                                                                                                                                        |
+| `efaas.work_permit_status` | `is_workpermit_active`                                                                                                                                                                                                         |
+| `efaas.passport_number`    | `passport`                                                                                                                                                                                                                     |
+| `efaas.country`            | `country_name`, `country_code`, `country_code_alpha3`, `country_dialing_code`                                                                                                                                                  |
+| `efaas.permanent_address`  | `permanent_address` (JSON string)                                                                                                                                                                                              |
+| `offline_access`           | Enables refresh tokens                                                                                                                                                                                                         |
+| `profile`                  | Legacy alias for `efaas.profile`                                                                                                                                                                                               |
 
 ## Mock Users
 
 The login page shows selectable mock users. Any unrecognized input defaults to the first user.
 
-| ID Number | Name | Type |
-|---|---|---|
-| `A000111` | Mariyam Ahmed Rasheed | Maldivian |
-| `A098765` | Ahmed Ali | Maldivian |
-| `WP941123` | James Wilson | Work Permit Holder |
+| ID Number  | Name                  | Type               |
+| ---------- | --------------------- | ------------------ |
+| `A000111`  | Mariyam Ahmed Rasheed | Maldivian          |
+| `A098765`  | Ahmed Ali             | Maldivian          |
+| `WP941123` | James Wilson          | Work Permit Holder |
 
 ## Integration Example
 
@@ -301,7 +301,7 @@ providers: [
     clientId: "my-app",
     clientSecret: "my-secret",
   },
-]
+];
 ```
 
 ### .NET
@@ -316,7 +316,3 @@ services.AddAuthentication().AddOpenIdConnect("efaas", options =>
     options.ResponseMode = "form_post";
 });
 ```
-
-## Full eFaas Spec
-
-See [EFAAS_SPEC.md](./EFAAS_SPEC.md) for the complete eFaas SSO integration specification extracted from the official documentation.
