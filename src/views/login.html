@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neFaas - Login</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary: #12469A;
+            --primary-dark: #0d3577;
+            --primary-light: #e8eef7;
+            --amber: #f59e0b;
+            --amber-bg: #fef3c7;
+            --amber-border: #fcd34d;
+            --amber-text: #92400e;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --radius: 10px;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--gray-900);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .navbar svg { height: 36px; width: auto; }
+        .navbar-text { font-size: 14px; color: var(--gray-400); margin-left: auto; }
+
+        /* Main */
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        /* Card */
+        .card {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+        }
+        .mock-banner {
+            background: var(--amber-bg);
+            border-bottom: 1px solid var(--amber-border);
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--amber-text);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--gray-200);
+            padding: 0 20px;
+        }
+        .tab {
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-500);
+            cursor: pointer;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab:hover { color: var(--primary); }
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Tab content */
+        .tab-pane { display: none; padding: 24px; }
+        .tab-pane.active { display: block; }
+
+        .tab-pane h4 { font-size: 18px; margin-bottom: 4px; }
+        .tab-pane .subtitle {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* Form */
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(18, 70, 154, 0.1);
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 12px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-primary:hover { background: var(--primary-dark); }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+        .links a {
+            font-size: 13px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .links a:hover { text-decoration: underline; }
+
+        /* Mock users */
+        .mock-section {
+            border-top: 1px solid var(--gray-200);
+            padding-top: 16px;
+            margin-top: 20px;
+        }
+        .mock-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .mock-users { display: flex; flex-direction: column; gap: 8px; }
+        .mock-user {
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mock-user:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .mock-user .name { font-weight: 600; font-size: 14px; }
+        .mock-user .id { font-family: 'SF Mono', 'Consolas', monospace; font-size: 13px; color: var(--gray-500); }
+        .mock-user .badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 99px;
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+
+        /* QR placeholder */
+        .qr-placeholder {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--gray-400);
+        }
+        .qr-placeholder svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
+        .qr-placeholder p { font-size: 14px; margin-top: 8px; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        /* Request info */
+        .request-info {
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            padding: 12px 24px;
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+        .request-info .label { font-weight: 600; color: var(--gray-700); }
+        .request-info .row { display: flex; gap: 4px; margin-bottom: 2px; }
+        .request-info .value {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 965 965" width="36" height="36" aria-label="neFaas logo" role="img">
+            <rect x="-2.81" y="0.21" width="964.75" height="964.76" rx="185.45" ry="185.45" fill="white" stroke="#12469A" stroke-width="20"/>
+            <path fill="#12469A" d="M479.54 287.7l51.03 48.92 -50.96 0 0 53.15c-56.04,0.28 -101.39,45.8 -101.39,101.91 0,56.29 45.63,101.91 101.91,101.91 56.28,0 101.91,-45.63 101.91,-101.91 0,-3.95 -0.23,-7.85 -0.67,-11.68 0,-314.06 101.91,-58.65 101.91,11.54 0,112.57 -91.22,203.83 -203.76,203.83 -112.53,0 -203.76,-91.26 -203.76,-203.83 0,-112.57 91.22,-203.83 203.76,-203.83z"/>
+            <path fill="#12469A" d="M530.73 185.78l-51.12 55.33c-140.48,0 -254.36,113.06 -254.36,252.52 0,139.46 113.88,252.52 254.36,252.52 95.02,0 177.88,-51.73 221.55,-128.37l89.33 50.09c-61.24,107.75 -177.52,180.49 -310.88,180.49 -197.07,0 -356.82,-158.82 -356.82,-354.74 0,-195.92 159.75,-354.74 356.82,-354.74l0 46.88 51.12 0z"/>
+            <rect fill="#12469A" x="581.38" y="138.9" width="101.91" height="408.88" rx="50.96" ry="31.87"/>
+            <rect fill="#12469A" x="734.29" y="288.76" width="101.91" height="253.88" rx="50.96" ry="19.79"/>
+            <circle fill="#12469A" cx="479.61" cy="491.53" r="51.11"/>
+            <circle fill="#12469A" cx="479.61" cy="338.81" r="51.11"/>
+            <circle fill="#12469A" cx="479.61" cy="190.01" r="51.11"/>
+            <circle fill="#12469A" cx="785.25" cy="190.01" r="51.11"/>
+            <circle fill="#12469A" cx="746.31" cy="641.73" r="51.11"/>
+        </svg>
+        <span style="font-size:20px;font-weight:700;color:#12469A;">neFaas</span>
+        <span class="navbar-text">Mock OIDC Server</span>
+    </nav>
+
+    <div class="main">
+        <div class="card">
+            <div class="mock-banner">Mock Development Environment</div>
+
+            <div class="tabs">
+                <button type="button" class="tab" id="tab-qr" onclick="switchTab('qr')">Scan to login</button>
+                <button type="button" class="tab active" id="tab-password" onclick="switchTab('password')">Password Login</button>
+            </div>
+
+            <!-- QR Tab -->
+            <div class="tab-pane" id="pane-qr">
+                <div class="qr-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-label="QR code icon" role="img">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
+                    </svg>
+                    <p><strong>QR Login unavailable</strong></p>
+                    <p style="color:var(--gray-400);font-size:13px;">QR scanning is not supported in the mock server.<br>Use Password Login instead.</p>
+                </div>
+            </div>
+
+            <!-- Password Tab -->
+            <div class="tab-pane active" id="pane-password">
+                <h4>Login to neFaas</h4>
+                <p class="subtitle">Login with ID card number, passport number, work permit, or mobile number</p>
+
+                <form id="loginForm" method="POST" action="/efaas/Account/Login">
+                    <input type="hidden" name="client_id" id="h_client_id">
+                    <input type="hidden" name="redirect_uri" id="h_redirect_uri">
+                    <input type="hidden" name="response_type" id="h_response_type">
+                    <input type="hidden" name="scope" id="h_scope">
+                    <input type="hidden" name="nonce" id="h_nonce">
+                    <input type="hidden" name="state" id="h_state">
+                    <input type="hidden" name="response_mode" id="h_response_mode">
+                    <input type="hidden" name="code_challenge" id="h_code_challenge">
+                    <input type="hidden" name="code_challenge_method" id="h_code_challenge_method">
+                    <input type="hidden" name="acr_values" id="h_acr_values">
+
+                    <input type="text" class="form-input" id="username" name="username"
+                           placeholder="ID / Passport / Work Permit / Mobile" autocomplete="off" >
+                    <input type="password" class="form-input" id="password" name="password"
+                           placeholder="Password" autocomplete="off" style="margin-top:10px;">
+                    <button type="submit" class="btn btn-primary">LOGIN</button>
+                </form>
+
+                <div class="links">
+                    <a href="#">Forgot password?</a>
+                    <a href="#">Register neFaas Account</a>
+                </div>
+
+                <div class="mock-section">
+                    <div class="mock-section-title">Mock Users (click to select)</div>
+                    <div class="mock-users" id="mockUsersContainer"></div>
+                </div>
+            </div>
+
+            <div class="request-info" id="requestInfo" style="display:none;">
+                <div class="row"><span class="label">Client:</span> <span class="value" id="info-client"></span></div>
+                <div class="row"><span class="label">Scopes:</span> <span class="value" id="info-scope"></span></div>
+                <div class="row"><span class="label">Flow:</span> <span class="value" id="info-flow"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 NCIT. All rights reserved.</footer>
+
+    <script>
+        var MOCK_USERS = __MOCK_USERS__;
+
+        // Tab switching
+        // biome-ignore lint/correctness/noUnusedVariables: called from onclick attributes
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); });
+            document.querySelectorAll('.tab-pane').forEach(p => { p.classList.remove('active'); });
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.getElementById(`pane-${tab}`).classList.add('active');
+        }
+
+        // Populate hidden fields from URL params
+        var params = new URLSearchParams(window.location.search);
+        var fields = ['client_id', 'redirect_uri', 'response_type', 'scope', 'nonce', 'state', 'response_mode', 'code_challenge', 'code_challenge_method', 'acr_values'];
+        fields.forEach((field) => {
+            var el = document.getElementById(`h_${field}`);
+            if (el) el.value = params.get(field) || '';
+        });
+
+        // Show request info if we have client_id
+        if (params.get('client_id')) {
+            document.getElementById('requestInfo').style.display = 'block';
+            document.getElementById('info-client').textContent = params.get('client_id');
+            document.getElementById('info-scope').textContent = params.get('scope') || 'openid';
+            // biome-ignore lint/correctness/noInnerDeclarations: inline script in HTML
+            var rt = params.get('response_type') || 'code';
+            // biome-ignore lint/correctness/noInnerDeclarations: inline script in HTML
+            var flow = rt.includes('id_token') ? 'Hybrid' : `Authorization Code${params.get('code_challenge') ? ' + PKCE' : ''}`;
+            document.getElementById('info-flow').textContent = `${flow} (${rt})`;
+        }
+
+        // Render mock user cards
+        var container = document.getElementById('mockUsersContainer');
+        MOCK_USERS.forEach((user) => {
+            var card = document.createElement('div');
+            card.className = 'mock-user';
+            card.innerHTML =
+                '<div><div class="name">' + user.name + '</div><div class="id">' + user.idnumber + '</div></div>' +
+                '<span class="badge">' + user.user_type + '</span>';
+            card.addEventListener('click', () => {
+                document.getElementById('username').value = user.idnumber;
+                document.getElementById('username').focus();
+            });
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
