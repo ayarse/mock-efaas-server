@@ -270,49 +270,64 @@ sequenceDiagram
 
 ## Mock Users
 
-The login page shows selectable mock users. Any unrecognized input defaults to the first user.
+The login page shows selectable mock users (see `src/data/users.json`). Any unrecognized input defaults to the first user. Default login password: `@123456` (configurable via `MOCK_PASSWORD`).
 
-| ID Number  | Name                  | Type               |
-| ---------- | --------------------- | ------------------ |
-| `A000111`  | Mariyam Ahmed Rasheed | Maldivian          |
-| `A098765`  | Ahmed Ali             | Maldivian          |
-| `WP941123` | James Wilson          | Work Permit Holder |
+To load custom users, create a JSON file matching the same schema and pass its path:
+
+```bash
+USERS_FILE=./my-users.json bun src/index.ts
+```
 
 ## Integration Example
 
-Point your OIDC client library at the mock server:
+Point your OIDC client library at the mock server. A default client is pre-registered:
 
 ```
 Authority / Issuer:  http://localhost:36445
 Discovery URL:       http://localhost:36445/.well-known/openid-configuration
-Client ID:           any-value-works
-Client Secret:       any-value-works
+Client ID:           mock-efaas-client
+Client Secret:       mock-efaas-secret
+Redirect URI:        http://localhost:3000/callback  (any URI is accepted)
+Login Password:      @123456
 ```
 
-### Next.js (next-auth)
+## Customization
 
-```ts
-providers: [
-  {
-    id: "efaas",
-    name: "eFaas",
-    type: "oidc",
-    issuer: "http://localhost:36445",
-    clientId: "my-app",
-    clientSecret: "my-secret",
-  },
-];
+### Register additional clients
+
+Register clients at runtime via the mock admin API:
+
+```bash
+curl -X POST http://localhost:36445/mock/clients \
+  -H "Content-Type: application/json" \
+  -d '{
+    "client_id": "my-app",
+    "client_secret": "my-secret",
+    "client_type": "server_side",
+    "redirect_uris": ["http://localhost:3000/callback"],
+    "post_logout_redirect_uris": ["http://localhost:3000"],
+    "backchannel_logout_uri": null,
+    "frontchannel_logout_uri": null,
+    "allowed_scopes": ["openid", "efaas.profile", "efaas.email"],
+    "allowed_grant_types": ["authorization_code", "refresh_token"],
+    "allow_offline_access": true
+  }'
 ```
 
-### .NET
+Or pre-load clients from a JSON file on startup:
 
-```csharp
-services.AddAuthentication().AddOpenIdConnect("efaas", options =>
-{
-    options.Authority = "http://localhost:36445";
-    options.ClientId = "my-app";
-    options.ClientSecret = "my-secret";
-    options.ResponseType = "code id_token";
-    options.ResponseMode = "form_post";
-});
+```bash
+CLIENTS_FILE=./my-clients.json bun src/index.ts
 ```
+
+The file should be a JSON array of client objects (same shape as the `POST /mock/clients` body above).
+
+### Environment variables
+
+| Variable       | Default      | Description                          |
+| -------------- | ------------ | ------------------------------------ |
+| `PORT`         | `36445`      | Server port                          |
+| `HOST`         | `localhost`  | Server host                          |
+| `MOCK_PASSWORD`| `@123456`    | Password for the login page          |
+| `USERS_FILE`   | (none)       | Path to a custom users JSON file     |
+| `CLIENTS_FILE` | (none)       | Path to a custom clients JSON file   |

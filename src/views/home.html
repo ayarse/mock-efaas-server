@@ -12,6 +12,7 @@
         margin: 0;
         padding: 0;
       }
+
       :root {
         --primary: #12469a;
         --primary-dark: #0d3577;
@@ -30,6 +31,7 @@
         --gray-900: #111827;
         --radius: 10px;
       }
+
       body {
         font-family:
           "Segoe UI",
@@ -52,10 +54,12 @@
         align-items: center;
         gap: 12px;
       }
+
       .navbar img {
         height: 36px;
         width: auto;
       }
+
       .navbar-text {
         font-size: 14px;
         color: var(--gray-400);
@@ -69,11 +73,13 @@
         text-align: center;
         padding: 64px 24px;
       }
+
       .hero h1 {
         font-size: 36px;
         font-weight: 700;
         margin-bottom: 12px;
       }
+
       .hero p {
         font-size: 18px;
         opacity: 0.85;
@@ -96,11 +102,13 @@
         font-weight: 700;
         margin-bottom: 8px;
       }
+
       .section-subtitle {
         font-size: 14px;
         color: var(--gray-500);
         margin-bottom: 20px;
       }
+
       .endpoint-table {
         width: 100%;
         background: #fff;
@@ -109,10 +117,12 @@
         overflow: hidden;
         margin-bottom: 48px;
       }
+
       .endpoint-table table {
         width: 100%;
         border-collapse: collapse;
       }
+
       .endpoint-table th {
         text-align: left;
         padding: 12px 20px;
@@ -124,14 +134,17 @@
         background: var(--gray-50);
         border-bottom: 1px solid var(--gray-200);
       }
+
       .endpoint-table td {
         padding: 10px 20px;
         font-size: 14px;
         border-bottom: 1px solid var(--gray-100);
       }
+
       .endpoint-table tr:last-child td {
         border-bottom: none;
       }
+
       .method {
         display: inline-block;
         font-size: 11px;
@@ -140,23 +153,28 @@
         border-radius: 4px;
         font-family: "SF Mono", "Consolas", monospace;
       }
+
       .method-get {
         background: #d1fae5;
         color: #065f46;
       }
+
       .method-post {
         background: #dbeafe;
         color: #1e40af;
       }
+
       .endpoint-path {
         font-family: "SF Mono", "Consolas", monospace;
         font-size: 13px;
         color: var(--gray-700);
       }
+
       .endpoint-path a {
         color: var(--primary);
         text-decoration: none;
       }
+
       .endpoint-path a:hover {
         text-decoration: underline;
       }
@@ -168,6 +186,7 @@
         gap: 12px;
         margin-bottom: 48px;
       }
+
       .user-card {
         background: #fff;
         border-radius: 8px;
@@ -177,15 +196,18 @@
         justify-content: space-between;
         align-items: center;
       }
+
       .user-card .name {
         font-weight: 600;
         font-size: 14px;
       }
+
       .user-card .id {
         font-family: "SF Mono", "Consolas", monospace;
         font-size: 13px;
         color: var(--gray-500);
       }
+
       .user-card .badge {
         font-size: 11px;
         padding: 2px 8px;
@@ -203,10 +225,12 @@
         padding: 28px;
         margin-bottom: 48px;
       }
+
       .quickstart h3 {
         font-size: 16px;
         margin-bottom: 16px;
       }
+
       .quickstart code {
         display: block;
         background: var(--gray-900);
@@ -219,6 +243,7 @@
         overflow-x: auto;
         white-space: pre;
       }
+
       .quickstart .hint {
         font-size: 13px;
         color: var(--gray-500);
@@ -238,18 +263,23 @@
         .features {
           grid-template-columns: 1fr;
         }
+
         .hero h1 {
           font-size: 28px;
         }
+
         .hero p {
           font-size: 16px;
         }
       }
     </style>
   </head>
+
   <body>
     <nav class="navbar">
-      <a href="/"><img src="/public/nefaas_logo_blue.svg" alt="neFaas" height="36" /></a>
+      <a href="/"
+        ><img src="/public/nefaas_logo_blue.svg" alt="neFaas" height="36"
+      /></a>
     </nav>
 
     <div class="hero">
@@ -425,14 +455,98 @@
       <div class="quickstart">
         <h3>Quick Start</h3>
         <code
-          >OIDC_ISSUER=__BASE_URL__ CLIENT_ID=mock-efaas-client
-          CLIENT_SECRET=mock-secret</code
+          >OIDC_ISSUER=__BASE_URL__
+CLIENT_ID=mock-efaas-client
+CLIENT_SECRET=mock-efaas-secret
+REDIRECT_URI=http://localhost:3000/callback</code
         >
         <p class="hint">
-          Point your app's OIDC provider to this server. Works as a drop-in
-          replacement for the eFaas dev environment — accepts any client and
-          returns signed JWTs.
+          Point your app's OIDC provider to this server using the default client
+          credentials above. Any redirect URI is accepted.
         </p>
+      </div>
+
+      <!-- Customization -->
+      <div class="quickstart">
+        <h3>Register Additional Clients</h3>
+        <code
+          >curl -X POST __BASE_URL__/mock/clients \ -H "Content-Type:
+          application/json" \ -d
+          '{"client_id":"my-app","client_secret":"my-secret",
+          "client_type":"server_side",
+          "redirect_uris":["http://localhost:3000/callback"],
+          "post_logout_redirect_uris":["http://localhost:3000"],
+          "backchannel_logout_uri":null,"frontchannel_logout_uri":null,
+          "allowed_scopes":["openid","efaas.profile","efaas.email"],
+          "allowed_grant_types":["authorization_code","refresh_token"],
+          "allow_offline_access":true}'</code
+        >
+        <p class="hint">
+          Or pre-load clients from a file:
+          <strong>CLIENTS_FILE=./my-clients.json bun src/index.ts</strong>
+        </p>
+      </div>
+
+      <div class="quickstart">
+        <h3>Custom Users</h3>
+        <p class="hint" style="margin-bottom: 12px">
+          Load your own mock users from a JSON file. The file should be an array
+          of user objects matching the format at
+          <code
+            style="
+              display: inline;
+              background: var(--gray-200);
+              color: var(--gray-700);
+              padding: 2px 6px;
+              border-radius: 4px;
+              font-size: 13px;
+            "
+            >src/data/users.json</code
+          >.
+        </p>
+        <code>USERS_FILE=./my-users.json bun src/index.ts</code>
+      </div>
+
+      <div class="quickstart">
+        <h3>Environment Variables</h3>
+        <div class="endpoint-table" style="margin: 0; box-shadow: none">
+          <table>
+            <thead>
+              <tr>
+                <th>Variable</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="endpoint-path">PORT</td>
+                <td>36445</td>
+                <td>Server port</td>
+              </tr>
+              <tr>
+                <td class="endpoint-path">HOST</td>
+                <td>localhost</td>
+                <td>Server host</td>
+              </tr>
+              <tr>
+                <td class="endpoint-path">MOCK_PASSWORD</td>
+                <td>@123456</td>
+                <td>Password for the login page</td>
+              </tr>
+              <tr>
+                <td class="endpoint-path">USERS_FILE</td>
+                <td>(none)</td>
+                <td>Path to a custom users JSON file</td>
+              </tr>
+              <tr>
+                <td class="endpoint-path">CLIENTS_FILE</td>
+                <td>(none)</td>
+                <td>Path to a custom clients JSON file</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
