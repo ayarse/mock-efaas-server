@@ -7,17 +7,23 @@ A mock OIDC server that works like the [eFaas](https://efaas.gov.mv) (Maldives N
 ## Quick Start
 
 ```bash
-bun install
-bun src/index.ts
+docker run -p 36445:36445 ghcr.io/ayarse/mock-efaas-server
 ```
 
 Server starts at `http://localhost:36445`. Configure with environment variables:
 
 ```bash
-PORT=9000 HOST=0.0.0.0 bun src/index.ts
+docker run -p 9000:9000 -e PORT=9000 -e HOST=0.0.0.0 ghcr.io/ayarse/mock-efaas-server
 ```
 
-### Docker
+### From source
+
+```bash
+bun install
+bun src/index.ts
+```
+
+Or build the image locally:
 
 ```bash
 docker build -t nefaas .
