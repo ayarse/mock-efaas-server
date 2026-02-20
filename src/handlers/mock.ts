@@ -1,7 +1,9 @@
 import type { AppContext } from "../config.ts";
-import type { EfaasClient } from "../data/index.ts";
-import { addClient, MOCK_USERS, oneTapCodes } from "../data/index.ts";
+import { MOCK_USERS } from "../data/users.ts";
 import { findUserBySub } from "../oidc/index.ts";
+import { addClient } from "../store/clients.ts";
+import { oneTapCodes } from "../store/session.ts";
+import type { EfaasClient } from "../types.ts";
 
 export function handleMockHealth(c: AppContext) {
   return c.json({ status: "ok" });

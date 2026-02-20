@@ -1,7 +1,7 @@
 import type { OAuth2Issuer } from "oauth2-mock-server";
 import { BASE_URL } from "../config.ts";
-import type { MockUser } from "../data/types.ts";
 import { DEFAULT_USER, MOCK_USERS } from "../data/users.ts";
+import type { MockUser } from "../types.ts";
 
 export function generateCode(): string {
   return (

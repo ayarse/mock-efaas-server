@@ -1,17 +1,17 @@
 import type { AppContext } from "../config.ts";
 import { TOKEN_EXPIRY_SECONDS } from "../config.ts";
 import {
-  authCodes,
-  findClient,
-  issueRefreshToken,
-  refreshTokens,
-} from "../data/index.ts";
-import {
   buildAccessToken,
   buildIdToken,
   findUserBySub,
   verifyPkce,
 } from "../oidc/index.ts";
+import { findClient } from "../store/clients.ts";
+import {
+  authCodes,
+  issueRefreshToken,
+  refreshTokens,
+} from "../store/session.ts";
 
 export async function handleToken(c: AppContext) {
   const body = await c.req.parseBody();

@@ -1,7 +1,7 @@
 import type { AppContext } from "../config.ts";
 import { BASE_URL } from "../config.ts";
-import { refreshTokens, revokedTokens } from "../data/index.ts";
 import { decodeJwtPayload } from "../oidc/index.ts";
+import { refreshTokens, revokedTokens } from "../store/session.ts";
 import { buildLoggedOutHtml } from "../views/index.ts";
 
 export function handleEndSession(c: AppContext) {

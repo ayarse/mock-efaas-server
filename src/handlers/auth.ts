@@ -1,6 +1,5 @@
 import type { AppContext } from "../config.ts";
 import { BASE_URL, MOCK_PASSWORD, TOKEN_EXPIRY_SECONDS } from "../config.ts";
-import { authCodes, cleanupCodes, oneTapCodes } from "../data/index.ts";
 import {
   buildAccessToken,
   buildIdToken,
@@ -8,6 +7,7 @@ import {
   findUserBySub,
   generateCode,
 } from "../oidc/index.ts";
+import { authCodes, cleanupCodes, oneTapCodes } from "../store/session.ts";
 import { buildFormPostHtml } from "../views/index.ts";
 
 export function handleAuthorize(c: AppContext) {

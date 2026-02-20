@@ -1,4 +1,4 @@
-import { MOCK_USERS } from "../data/index.ts";
+import { MOCK_USERS } from "../data/users.ts";
 
 /**
  * Loads login.html from the same directory and injects the mock user list

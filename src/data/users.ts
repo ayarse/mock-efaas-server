@@ -1,5 +1,5 @@
 import { USERS_FILE } from "../config.ts";
-import type { MockUser } from "./types.ts";
+import type { MockUser } from "../types.ts";
 import defaultUsers from "./users.json";
 
 async function loadUsersFromFile(): Promise<MockUser[] | null> {

@@ -1,4 +1,4 @@
-import type { AuthCodeEntry } from "./types.ts";
+import type { AuthCodeEntry } from "../types.ts";
 
 export const authCodes = new Map<string, AuthCodeEntry>();
 

@@ -3,7 +3,7 @@ import { cors } from "hono/cors";
 import { OAuth2Issuer } from "oauth2-mock-server";
 import type { AppEnv } from "./config.ts";
 import { BASE_URL, HOST, PORT } from "./config.ts";
-import { MOCK_USERS } from "./data/index.ts";
+import { MOCK_USERS } from "./data/users.ts";
 import {
   handleAuthorize,
   handleDiscovery,

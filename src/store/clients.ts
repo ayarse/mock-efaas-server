@@ -1,5 +1,5 @@
 import { CLIENTS_FILE } from "../config.ts";
-import type { EfaasClient } from "./types.ts";
+import type { EfaasClient } from "../types.ts";
 
 const DEFAULT_CLIENT: EfaasClient = {
   client_id: "mock-efaas-client",
