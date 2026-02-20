@@ -54,7 +54,7 @@ app.get("/api/users/:id", (c) => {
 });
 
 export default {
-  port: 8080,
+  port: 36445,
   fetch: app.fetch,
 };
 ```

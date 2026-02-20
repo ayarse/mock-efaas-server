@@ -9,7 +9,7 @@ bun install
 bun src/index.ts
 ```
 
-Server starts at `http://localhost:8080`. Configure with environment variables:
+Server starts at `http://localhost:36445`. Configure with environment variables:
 
 ```bash
 PORT=9000 HOST=0.0.0.0 bun src/index.ts
@@ -159,7 +159,7 @@ sequenceDiagram
 Register a client first via the mock admin API:
 
 ```bash
-curl -X POST http://localhost:8080/mock/clients \
+curl -X POST http://localhost:36445/mock/clients \
   -H "Content-Type: application/json" \
   -d '{"client_id":"my-service","client_secret":"secret","allowed_grant_types":["client_credentials"]}'
 ```
@@ -186,7 +186,7 @@ sequenceDiagram
 ```
 
 ```bash
-curl -X POST http://localhost:8080/connect/token \
+curl -X POST http://localhost:36445/connect/token \
   -d "grant_type=refresh_token&refresh_token=REFRESH_TOKEN&client_id=YOUR_CLIENT_ID"
 ```
 
@@ -215,7 +215,7 @@ sequenceDiagram
 ### UserInfo
 
 ```bash
-curl http://localhost:8080/connect/userinfo \
+curl http://localhost:36445/connect/userinfo \
   -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
@@ -283,8 +283,8 @@ The login page shows selectable mock users. Any unrecognized input defaults to t
 Point your OIDC client library at the mock server:
 
 ```
-Authority / Issuer:  http://localhost:8080
-Discovery URL:       http://localhost:8080/.well-known/openid-configuration
+Authority / Issuer:  http://localhost:36445
+Discovery URL:       http://localhost:36445/.well-known/openid-configuration
 Client ID:           any-value-works
 Client Secret:       any-value-works
 ```
@@ -297,7 +297,7 @@ providers: [
     id: "efaas",
     name: "eFaas",
     type: "oidc",
-    issuer: "http://localhost:8080",
+    issuer: "http://localhost:36445",
     clientId: "my-app",
     clientSecret: "my-secret",
   },
@@ -309,7 +309,7 @@ providers: [
 ```csharp
 services.AddAuthentication().AddOpenIdConnect("efaas", options =>
 {
-    options.Authority = "http://localhost:8080";
+    options.Authority = "http://localhost:36445";
     options.ClientId = "my-app";
     options.ClientSecret = "my-secret";
     options.ResponseType = "code id_token";
