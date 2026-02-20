@@ -35,15 +35,15 @@ docker run -p 36445:36445 nefaas
 | Endpoint                            | Method   | Description                        |
 | ----------------------------------- | -------- | ---------------------------------- |
 | `/.well-known/openid-configuration` | GET      | OIDC Discovery Document            |
-| `/.well-known/jwks`                 | GET      | JSON Web Key Set                   |
+| `/.well-known/openid-configuration/jwks` | GET | JSON Web Key Set                   |
 | `/connect/authorize`                | GET      | Authorization (redirects to login) |
 | `/connect/token`                    | POST     | Token exchange                     |
 | `/connect/userinfo`                 | GET      | User info claims                   |
 | `/connect/endsession`               | GET      | Logout / end session               |
-| `/connect/revoke`                   | POST     | Token revocation                   |
+| `/connect/revocation`               | POST     | Token revocation                   |
 | `/connect/introspect`               | POST     | Token introspection                |
 | `/efaas/Account/Login`              | GET/POST | Login page UI                      |
-| `/user/photo`                       | GET      | Mock user photo                    |
+| `/api/user/photo/:sub`              | GET      | Mock user photo                    |
 
 ## Authorization Flows
 
