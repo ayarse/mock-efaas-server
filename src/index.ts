@@ -21,7 +21,7 @@ import {
   handleUserInfo,
   handleUserPhoto,
 } from "./handlers/index.ts";
-import { loadLoginPage } from "./views/index.ts";
+import { loadHomePage, loadLoginPage } from "./views/index.ts";
 
 // ============ JWT Issuer Setup ============
 
@@ -31,6 +31,7 @@ issuer.url = BASE_URL;
 
 // ============ Pre-load Login Page ============
 
+const HOME_PAGE_HTML = await loadHomePage();
 const LOGIN_PAGE_HTML = await loadLoginPage();
 
 // ============ Hono App ============
@@ -44,6 +45,9 @@ app.use("*", async (c, next) => {
   c.set("loginPageHtml", LOGIN_PAGE_HTML);
   await next();
 });
+
+// Home page
+app.get("/", (c) => c.html(HOME_PAGE_HTML));
 
 // OIDC Discovery
 app.get("/.well-known/openid-configuration", handleDiscovery);

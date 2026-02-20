@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neFaas - Mock eFaas OIDC Server</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary: #12469A;
+            --primary-dark: #0d3577;
+            --primary-light: #e8eef7;
+            --amber: #f59e0b;
+            --amber-bg: #fef3c7;
+            --amber-border: #fcd34d;
+            --amber-text: #92400e;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --radius: 10px;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--gray-900);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .navbar svg { height: 36px; width: auto; }
+        .navbar-title { font-size: 20px; font-weight: 700; color: var(--primary); }
+        .navbar-text { font-size: 14px; color: var(--gray-400); margin-left: auto; }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a56b8 100%);
+            color: #fff;
+            text-align: center;
+            padding: 64px 24px;
+        }
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .hero p {
+            font-size: 18px;
+            opacity: 0.85;
+            max-width: 560px;
+            margin: 0 auto 24px;
+            line-height: 1.6;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--amber);
+            color: var(--amber-text);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 99px;
+        }
+
+        /* Content */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+            flex: 1;
+        }
+
+        /* Endpoints section */
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 20px;
+        }
+        .endpoint-table {
+            width: 100%;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 48px;
+        }
+        .endpoint-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .endpoint-table th {
+            text-align: left;
+            padding: 12px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-500);
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .endpoint-table td {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .endpoint-table tr:last-child td { border-bottom: none; }
+        .method {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Consolas', monospace;
+        }
+        .method-get { background: #d1fae5; color: #065f46; }
+        .method-post { background: #dbeafe; color: #1e40af; }
+        .endpoint-path {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 13px;
+            color: var(--gray-700);
+        }
+        .endpoint-path a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .endpoint-path a:hover { text-decoration: underline; }
+
+        /* Mock users */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+        .user-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 14px 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-card .name { font-weight: 600; font-size: 14px; }
+        .user-card .id {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .user-card .badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 99px;
+            background: var(--primary-light);
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        /* Quick start */
+        .quickstart {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 28px;
+            margin-bottom: 48px;
+        }
+        .quickstart h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        .quickstart code {
+            display: block;
+            background: var(--gray-900);
+            color: #e5e7eb;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .quickstart .hint {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-top: 12px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 13px;
+            color: var(--gray-400);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        @media (max-width: 700px) {
+            .features { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 965 965" width="36" height="36" aria-label="neFaas logo" role="img">
+            <rect x="-2.81" y="0.21" width="964.75" height="964.76" rx="185.45" ry="185.45" fill="white" stroke="#12469A" stroke-width="20"/>
+            <path fill="#12469A" d="M479.54 287.7l51.03 48.92 -50.96 0 0 53.15c-56.04,0.28 -101.39,45.8 -101.39,101.91 0,56.29 45.63,101.91 101.91,101.91 56.28,0 101.91,-45.63 101.91,-101.91 0,-3.95 -0.23,-7.85 -0.67,-11.68 0,-314.06 101.91,-58.65 101.91,11.54 0,112.57 -91.22,203.83 -203.76,203.83 -112.53,0 -203.76,-91.26 -203.76,-203.83 0,-112.57 91.22,-203.83 203.76,-203.83z"/>
+            <path fill="#12469A" d="M530.73 185.78l-51.12 55.33c-140.48,0 -254.36,113.06 -254.36,252.52 0,139.46 113.88,252.52 254.36,252.52 95.02,0 177.88,-51.73 221.55,-128.37l89.33 50.09c-61.24,107.75 -177.52,180.49 -310.88,180.49 -197.07,0 -356.82,-158.82 -356.82,-354.74 0,-195.92 159.75,-354.74 356.82,-354.74l0 46.88 51.12 0z"/>
+            <rect fill="#12469A" x="581.38" y="138.9" width="101.91" height="408.88" rx="50.96" ry="31.87"/>
+            <rect fill="#12469A" x="734.29" y="288.76" width="101.91" height="253.88" rx="50.96" ry="19.79"/>
+            <circle fill="#12469A" cx="479.61" cy="491.53" r="51.11"/>
+            <circle fill="#12469A" cx="479.61" cy="338.81" r="51.11"/>
+            <circle fill="#12469A" cx="479.61" cy="190.01" r="51.11"/>
+            <circle fill="#12469A" cx="785.25" cy="190.01" r="51.11"/>
+            <circle fill="#12469A" cx="746.31" cy="641.73" r="51.11"/>
+        </svg>
+        <span class="navbar-title">neFaas</span>
+        <span class="navbar-text">Mock OIDC Server</span>
+    </nav>
+
+    <div class="hero">
+        <h1>neFaas Mock Server</h1>
+        <p>A drop-in mock eFaas (Maldives National SSO) OIDC server for local development and testing.</p>
+        <span class="hero-badge">Mock Development Environment</span>
+    </div>
+
+    <div class="content">
+        <!-- Endpoints -->
+        <h2 class="section-title">Endpoints</h2>
+        <p class="section-subtitle">All standard eFaas OIDC endpoints are available.</p>
+        <div class="endpoint-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Path</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path"><a href="__BASE_URL__/.well-known/openid-configuration">/.well-known/openid-configuration</a></td>
+                        <td>OIDC Discovery</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path"><a href="__BASE_URL__/.well-known/openid-configuration/jwks">/.well-known/openid-configuration/jwks</a></td>
+                        <td>JSON Web Key Set</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path">/connect/authorize</td>
+                        <td>Authorization</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-post">POST</span></td>
+                        <td class="endpoint-path">/connect/token</td>
+                        <td>Token</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path">/connect/userinfo</td>
+                        <td>UserInfo</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path">/connect/endsession</td>
+                        <td>End Session</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-post">POST</span></td>
+                        <td class="endpoint-path">/connect/revocation</td>
+                        <td>Token Revocation</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-post">POST</span></td>
+                        <td class="endpoint-path">/connect/introspect</td>
+                        <td>Token Introspection</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path"><a href="__BASE_URL__/efaas/Account/Login">/efaas/Account/Login</a></td>
+                        <td>Login UI</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path">/api/user/photo/:sub</td>
+                        <td>User Photo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mock Admin -->
+        <h2 class="section-title">Mock Admin API</h2>
+        <p class="section-subtitle">Manage mock server state at runtime.</p>
+        <div class="endpoint-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Path</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path"><a href="__BASE_URL__/mock/health">/mock/health</a></td>
+                        <td>Health check</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-get">GET</span></td>
+                        <td class="endpoint-path"><a href="__BASE_URL__/mock/users">/mock/users</a></td>
+                        <td>List mock users</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-post">POST</span></td>
+                        <td class="endpoint-path">/mock/one-tap-codes</td>
+                        <td>Generate one-tap login code</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method method-post">POST</span></td>
+                        <td class="endpoint-path">/mock/clients</td>
+                        <td>Register a client</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mock Users -->
+        <h2 class="section-title">Mock Users</h2>
+        <p class="section-subtitle">Pre-loaded test users. Default password: <code style="background:var(--gray-200);padding:2px 6px;border-radius:4px;font-size:13px;">__MOCK_PASSWORD__</code></p>
+        <div class="users-grid" id="usersGrid">__MOCK_USERS__</div>
+
+        <!-- Quick Start -->
+        <div class="quickstart">
+            <h3>Quick Start</h3>
+            <code>OIDC_ISSUER=__BASE_URL__
+CLIENT_ID=mock-efaas-client
+CLIENT_SECRET=mock-secret</code>
+            <p class="hint">Point your app's OIDC provider to this server. It accepts any registered client and returns signed JWTs.</p>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 NCIT. All rights reserved.</footer>
+</body>
+</html>

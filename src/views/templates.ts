@@ -1,4 +1,22 @@
+import { BASE_URL, MOCK_PASSWORD } from "../config.ts";
 import { MOCK_USERS } from "../data/users.ts";
+
+/**
+ * Loads home.html and injects mock users, base URL, and password.
+ */
+export async function loadHomePage(): Promise<string> {
+  const template = await Bun.file(`${import.meta.dir}/home.html`).text();
+  const usersHtml = MOCK_USERS.map((u) => {
+    const name = [u.first_name, u.middle_name, u.last_name]
+      .filter(Boolean)
+      .join(" ");
+    return `<div class="user-card"><div><div class="name">${name}</div><div class="id">${u.idnumber}</div></div><span class="badge">${u.user_type_description}</span></div>`;
+  }).join("\n");
+  return template
+    .replace(/__BASE_URL__/g, BASE_URL)
+    .replace("__MOCK_USERS__", usersHtml)
+    .replace("__MOCK_PASSWORD__", MOCK_PASSWORD);
+}
 
 /**
  * Loads login.html from the same directory and injects the mock user list
