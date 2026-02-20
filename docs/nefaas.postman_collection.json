@@ -1,0 +1,489 @@
+{
+  "info": {
+    "name": "neFaas Mock OIDC Server",
+    "description": "Postman collection for neFaas — a mock eFaas OIDC server for local development and testing.\n\nDefault base URL: http://localhost:36445\nDefault mock password: @123456",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:36445"
+    },
+    {
+      "key": "clientId",
+      "value": "mock-efaas-client"
+    },
+    {
+      "key": "clientSecret",
+      "value": "mock-secret"
+    },
+    {
+      "key": "redirectUri",
+      "value": "http://localhost:3000/callback"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "authCode",
+      "value": ""
+    },
+    {
+      "key": "userSub",
+      "value": "21be85ed-951a-4cc9-ac27-16924b4a6136"
+    },
+    {
+      "key": "mockPassword",
+      "value": "@123456"
+    }
+  ],
+  "item": [
+    {
+      "name": "OIDC Discovery",
+      "item": [
+        {
+          "name": "OpenID Configuration",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/.well-known/openid-configuration",
+              "host": ["{{baseUrl}}"],
+              "path": [".well-known", "openid-configuration"]
+            },
+            "description": "Returns the OpenID Connect discovery document with all supported endpoints, scopes, and capabilities."
+          }
+        },
+        {
+          "name": "JSON Web Key Set (JWKS)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/.well-known/openid-configuration/jwks",
+              "host": ["{{baseUrl}}"],
+              "path": [".well-known", "openid-configuration", "jwks"]
+            },
+            "description": "Returns the public keys used to verify JWT signatures."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authorization",
+      "item": [
+        {
+          "name": "Authorize (Code Flow)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/connect/authorize?client_id={{clientId}}&redirect_uri={{redirectUri}}&response_type=code&scope=openid profile efaas.idnumber&state=random-state&nonce=random-nonce",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "authorize"],
+              "query": [
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "response_type", "value": "code" },
+                { "key": "scope", "value": "openid profile efaas.idnumber" },
+                { "key": "state", "value": "random-state" },
+                { "key": "nonce", "value": "random-nonce" }
+              ]
+            },
+            "description": "Initiates the authorization code flow. Redirects to the login page. Open in browser to complete the login flow."
+          }
+        },
+        {
+          "name": "Authorize (Hybrid Flow)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/connect/authorize?client_id={{clientId}}&redirect_uri={{redirectUri}}&response_type=code id_token&scope=openid profile&state=random-state&nonce=random-nonce&response_mode=form_post",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "authorize"],
+              "query": [
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "response_type", "value": "code id_token" },
+                { "key": "scope", "value": "openid profile" },
+                { "key": "state", "value": "random-state" },
+                { "key": "nonce", "value": "random-nonce" },
+                { "key": "response_mode", "value": "form_post" }
+              ]
+            },
+            "description": "Initiates the hybrid flow (code + id_token). Uses form_post response mode."
+          }
+        },
+        {
+          "name": "Authorize (One-Tap Login)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/connect/authorize?client_id={{clientId}}&redirect_uri={{redirectUri}}&response_type=code&scope=openid profile&acr_values=efaas_login_code:{{oneTapCode}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "authorize"],
+              "query": [
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "response_type", "value": "code" },
+                { "key": "scope", "value": "openid profile" },
+                { "key": "acr_values", "value": "efaas_login_code:{{oneTapCode}}" }
+              ]
+            },
+            "description": "Skips the login page using a one-tap login code. Generate a code first via POST /mock/one-tap-codes."
+          }
+        },
+        {
+          "name": "Login Page",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/efaas/Account/Login?client_id={{clientId}}&redirect_uri={{redirectUri}}&response_type=code&scope=openid profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["efaas", "Account", "Login"],
+              "query": [
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "response_type", "value": "code" },
+                { "key": "scope", "value": "openid profile" }
+              ]
+            },
+            "description": "Returns the login page HTML. Normally accessed via redirect from /connect/authorize."
+          }
+        },
+        {
+          "name": "Login Submit",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "username", "value": "A000000" },
+                { "key": "password", "value": "{{mockPassword}}" },
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "response_type", "value": "code" },
+                { "key": "scope", "value": "openid profile efaas.idnumber" },
+                { "key": "state", "value": "random-state", "disabled": true },
+                { "key": "nonce", "value": "random-nonce", "disabled": true }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/efaas/Account/Login",
+              "host": ["{{baseUrl}}"],
+              "path": ["efaas", "Account", "Login"]
+            },
+            "description": "Submits the login form. The username is an ID number (e.g. A000000). Redirects to the redirect_uri with an authorization code."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Token",
+      "item": [
+        {
+          "name": "Exchange Code for Tokens",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    if (json.access_token) pm.collectionVariables.set('accessToken', json.access_token);",
+                  "    if (json.refresh_token) pm.collectionVariables.set('refreshToken', json.refresh_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "grant_type", "value": "authorization_code" },
+                { "key": "code", "value": "{{authCode}}" },
+                { "key": "redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "client_secret", "value": "{{clientSecret}}" },
+                { "key": "code_verifier", "value": "", "disabled": true }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/connect/token",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "token"]
+            },
+            "description": "Exchanges an authorization code for access, ID, and optionally refresh tokens. Auto-saves access_token and refresh_token to collection variables."
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    if (json.access_token) pm.collectionVariables.set('accessToken', json.access_token);",
+                  "    if (json.refresh_token) pm.collectionVariables.set('refreshToken', json.refresh_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "grant_type", "value": "refresh_token" },
+                { "key": "refresh_token", "value": "{{refreshToken}}" },
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "client_secret", "value": "{{clientSecret}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/connect/token",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "token"]
+            },
+            "description": "Uses a refresh token to obtain a new access token. Requires offline_access scope in the original auth request. Auto-saves new tokens."
+          }
+        },
+        {
+          "name": "Client Credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    if (json.access_token) pm.collectionVariables.set('accessToken', json.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "grant_type", "value": "client_credentials" },
+                { "key": "client_id", "value": "{{clientId}}" },
+                { "key": "client_secret", "value": "{{clientSecret}}" },
+                { "key": "scope", "value": "openid" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/connect/token",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "token"]
+            },
+            "description": "Obtains an access token using client credentials. The client must be registered via POST /mock/clients with client_credentials in allowed_grant_types."
+          }
+        }
+      ]
+    },
+    {
+      "name": "UserInfo & Photo",
+      "item": [
+        {
+          "name": "Get UserInfo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connect/userinfo",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "userinfo"]
+            },
+            "description": "Returns claims about the authenticated user based on the scopes granted in the access token."
+          }
+        },
+        {
+          "name": "Get User Photo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/photo/{{userSub}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "photo", "{{userSub}}"]
+            },
+            "description": "Returns a placeholder SVG photo for the given user sub."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session Management",
+      "item": [
+        {
+          "name": "End Session",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/connect/endsession?post_logout_redirect_uri={{redirectUri}}&state=random-state",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "endsession"],
+              "query": [
+                { "key": "post_logout_redirect_uri", "value": "{{redirectUri}}" },
+                { "key": "state", "value": "random-state" }
+              ]
+            },
+            "description": "Ends the user session. Optionally redirects to post_logout_redirect_uri."
+          }
+        },
+        {
+          "name": "Revoke Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "token", "value": "{{accessToken}}" },
+                { "key": "token_type_hint", "value": "access_token", "disabled": true }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/connect/revocation",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "revocation"]
+            },
+            "description": "Revokes an access token or refresh token. Per RFC 7009, always returns 200."
+          }
+        },
+        {
+          "name": "Introspect Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "token", "value": "{{accessToken}}" },
+                { "key": "token_type_hint", "value": "access_token", "disabled": true }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/connect/introspect",
+              "host": ["{{baseUrl}}"],
+              "path": ["connect", "introspect"]
+            },
+            "description": "Introspects a token and returns its claims if active. Works with access tokens, ID tokens, and refresh tokens."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mock Admin",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mock/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["mock", "health"]
+            },
+            "description": "Returns { status: \"ok\" } if the server is running."
+          }
+        },
+        {
+          "name": "List Mock Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mock/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["mock", "users"]
+            },
+            "description": "Returns all pre-loaded mock users with their full profile data."
+          }
+        },
+        {
+          "name": "Generate One-Tap Code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    if (json.efaas_login_code) pm.collectionVariables.set('oneTapCode', json.efaas_login_code);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_sub\": \"{{userSub}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mock/one-tap-codes",
+              "host": ["{{baseUrl}}"],
+              "path": ["mock", "one-tap-codes"]
+            },
+            "description": "Generates a one-tap login code for the given user. Use the returned code in the acr_values parameter of the authorize endpoint to skip the login page. Auto-saves the code to the oneTapCode variable."
+          }
+        },
+        {
+          "name": "Register Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"my-app\",\n  \"client_secret\": \"my-secret\",\n  \"client_type\": \"server_side\",\n  \"redirect_uris\": [\"http://localhost:3000/callback\"],\n  \"post_logout_redirect_uris\": [\"http://localhost:3000\"],\n  \"backchannel_logout_uri\": null,\n  \"frontchannel_logout_uri\": null,\n  \"allowed_scopes\": [\"openid\", \"profile\", \"efaas.idnumber\", \"efaas.birthdate\", \"efaas.email\", \"efaas.mobile\", \"efaas.photo\", \"efaas.passport_number\", \"efaas.country\", \"efaas.permanent_address\", \"efaas.current_address\", \"efaas.work_permit_status\"],\n  \"allowed_grant_types\": [\"authorization_code\", \"client_credentials\"],\n  \"allow_offline_access\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mock/clients",
+              "host": ["{{baseUrl}}"],
+              "path": ["mock", "clients"]
+            },
+            "description": "Registers a new OIDC client at runtime. Required for client_credentials grant. The mock server accepts any client by default for the authorization code flow."
+          }
+        }
+      ]
+    }
+  ]
+}
