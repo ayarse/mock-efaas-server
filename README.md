@@ -2,6 +2,8 @@
 
 A mock OIDC server that works like the [eFaas](https://efaas.gov.mv) (Maldives National SSO) developer environment. Use it locally or in CI as a drop-in replacement for the real eFaas dev server — same endpoints, scopes, claims, and authorization flows.
 
+![neFaas Mock Server](assets/screenshot.png)
+
 ## Quick Start
 
 ```bash
