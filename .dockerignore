@@ -4,5 +4,4 @@ node_modules
 .claude
 docs
 scripts
-assets
 *.md

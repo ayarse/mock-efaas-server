@@ -48,7 +48,7 @@ app.use("*", async (c, next) => {
 });
 
 // Static files
-app.use("/public/*", serveStatic({ root: "./" }));
+app.use("/assets/*", serveStatic({ root: "./" }));
 
 // Home page
 app.get("/", (c) => c.html(HOME_PAGE_HTML));

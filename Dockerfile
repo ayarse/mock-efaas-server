@@ -7,7 +7,7 @@ FROM oven/bun:1
 WORKDIR /app
 COPY --from=install /app/node_modules node_modules
 COPY src src
-COPY public public
+COPY assets assets
 COPY package.json .
 
 ENV HOST=0.0.0.0
