@@ -1,0 +1,24 @@
+{
+  "name": "efaas-mock-server",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "2.4.2",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "dev": "bun --hot src/index.ts",
+    "start": "bun src/index.ts",
+    "check": "biome check",
+    "fix": "biome check --fix",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "hono": "^4.11.10",
+    "oauth2-mock-server": "^8.2.1"
+  }
+}
