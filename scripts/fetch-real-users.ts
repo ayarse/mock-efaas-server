@@ -28,18 +28,87 @@ const SCOPE_SETS = [
 ];
 let ALL_SCOPES = SCOPE_SETS[0]!;
 
-const TEST_ACCOUNTS = [
-  { username: "A400011", password: "@123456" },
-  { username: "A400012", password: "@123456" },
-  { username: "A400013", password: "@123456" },
-  { username: "A400014", password: "@123456" },
-  { username: "A400015", password: "@123456" },
-  { username: "A400016", password: "@123456" },
-  { username: "A400017", password: "@123456" },
-  { username: "A400018", password: "@123456" },
-  { username: "A400019", password: "@123456" },
-  { username: "A400020", password: "@123456" },
-];
+interface TestAccount {
+  username: string;
+  password: string;
+  /** The account's spreadsheet row, keyed by column header. */
+  row: Record<string, string>;
+}
+
+const xmlText = (s: string) =>
+  s
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&");
+
+/**
+ * Reads test accounts from the newest docs/eFaas_Developer_Test_Accounts_v*.xlsx.
+ * An xlsx is a zip of XML, so `unzip` is enough: every sheet with a
+ * Username and Password column contributes accounts.
+ */
+async function loadTestAccounts(): Promise<{ file: string; accounts: TestAccount[] }> {
+  const version = (f: string) =>
+    (f.match(/_v([\d.]+)\.xlsx$/)?.[1] ?? "0").split(".").map(Number);
+  const files = [
+    ...new Bun.Glob("docs/eFaas_Developer_Test_Accounts_v*.xlsx").scanSync(),
+  ].sort((a, b) => {
+    const [x, y] = [version(a), version(b)];
+    for (let i = 0; i < Math.max(x.length, y.length); i++) {
+      const d = (x[i] ?? 0) - (y[i] ?? 0);
+      if (d) return d;
+    }
+    return 0;
+  });
+  const file = files.at(-1);
+  if (!file) throw new Error("No docs/eFaas_Developer_Test_Accounts_v*.xlsx found");
+
+  const sharedXml = await Bun.$`unzip -p ${file} xl/sharedStrings.xml`.quiet().text();
+  const shared = [...sharedXml.matchAll(/<si>([\s\S]*?)<\/si>/g)].map((m) =>
+    [...(m[1] ?? "").matchAll(/<t[^>]*>([^<]*)<\/t>/g)]
+      .map((t) => xmlText(t[1] ?? ""))
+      .join(""),
+  );
+  const sheets = (await Bun.$`unzip -Z1 ${file}`.quiet().text())
+    .split("\n")
+    .filter((f) => /^xl\/worksheets\/sheet\d+\.xml$/.test(f));
+
+  const accounts: TestAccount[] = [];
+  for (const sheet of sheets) {
+    const xml = await Bun.$`unzip -p ${file} ${sheet}`.quiet().text();
+    const rows = [...xml.matchAll(/<row[^>]*>([\s\S]*?)<\/row>/g)].map((row) => {
+      const cells: Record<string, string> = {};
+      for (const c of (row[1] ?? "").matchAll(
+        /<c r="([A-Z]+)\d+"([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g,
+      )) {
+        const [, col, attrs, inner = ""] = c;
+        const raw =
+          inner.match(/<v>([^<]*)<\/v>/)?.[1] ??
+          inner.match(/<t[^>]*>([^<]*)<\/t>/)?.[1] ??
+          "";
+        cells[col ?? ""] = attrs?.includes('t="s"')
+          ? (shared[Number(raw)] ?? "")
+          : xmlText(raw);
+      }
+      return cells;
+    });
+    const header = rows.find((r) => Object.values(r).includes("Username"));
+    if (!header) continue;
+    const col = (name: string) =>
+      Object.entries(header).find(([, v]) => v.trim() === name)?.[0] ?? "";
+    const [userCol, passCol] = [col("Username"), col("Password")];
+    for (const r of rows.slice(rows.indexOf(header) + 1)) {
+      const username = r[userCol]?.trim();
+      const password = r[passCol]?.trim();
+      const row = Object.fromEntries(
+        Object.entries(header).map(([c, name]) => [name.trim(), (r[c] ?? "").trim()]),
+      );
+      if (username && password) accounts.push({ username, password, row });
+    }
+  }
+  return { file, accounts };
+}
 
 function decodeJwtPayload(token: string): Record<string, unknown> {
   const parts = token.split(".");
@@ -586,14 +655,28 @@ async function exchangeAndFetch(
   return { userinfo, idTokenClaims };
 }
 
+/** "1990-07-01" (spreadsheet) → "7/1/1990" (eFaas birthdate format). */
+function efaasDate(iso: string | undefined): string {
+  const m = iso?.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${Number(m[2])}/${Number(m[3])}/${m[1]}` : "";
+}
+
+/**
+ * Builds a mock user from eFaas userinfo/id_token claims. Claims the client
+ * isn't allowed to read (birthdate, passport) come from the spreadsheet.
+ */
 function toMockUser(
   ui: Record<string, unknown>,
   claims: Record<string, unknown>,
+  account: TestAccount,
 ) {
   const s = (key: string) =>
     (String(ui[key] ?? claims[key] ?? "")).trim();
+  const sheet = (...cols: string[]) =>
+    cols.map((c) => account.row[c]).find((v) => v && v !== "NULL" && v !== "-") ?? "";
   return {
     sub: s("sub"),
+    username: account.username,
     first_name: s("first_name"),
     middle_name: s("middle_name"),
     last_name: s("last_name"),
@@ -602,7 +685,7 @@ function toMockUser(
     last_name_dhivehi: s("last_name_dhivehi"),
     gender: s("gender"),
     idnumber: s("idnumber"),
-    verified: s("verified") === "True",
+    verified: s("verified").toLowerCase() === "true",
     verification_type: s("verification_type"),
     last_verified_date: s("last_verified_date"),
     user_type_description: s("user_type_description"),
@@ -610,9 +693,10 @@ function toMockUser(
     email: s("email"),
     mobile: s("mobile"),
     country_dialing_code: s("country_dialing_code"),
-    birthdate: s("birthdate") || s("dob") || "",
-    is_workpermit_active: false,
-    passport_number: s("passport_number"),
+    birthdate:
+      s("birthdate") || s("dob") || efaasDate(sheet("DoB", "Date of Birth")),
+    is_workpermit_active: s("is_workpermit_active").toLowerCase() === "true",
+    passport_number: s("passport_number") || sheet("Passport Number"),
     previous_passport_number: s("previous_passport_number"),
     country_name: s("country_name") || "Maldives",
     country_code: Number(ui.country_code ?? claims.country_code ?? 462),
@@ -695,32 +779,48 @@ async function main() {
   }
   console.log(`\nUsing scopes: ${ALL_SCOPES}\n`);
 
-  const users: Record<string, unknown>[] = [];
+  const { file, accounts } = await loadTestAccounts();
+  console.log(`Loaded ${accounts.length} test accounts from ${file}\n`);
 
-  for (const account of TEST_ACCOUNTS) {
-    console.log(`\n${"=".repeat(60)}`);
-    console.log(`=== ${account.username} ===`);
-    console.log(`${"=".repeat(60)}`);
-    try {
-      const data = await fetchUserData(
-        discovery,
-        account.username,
-        account.password,
-      );
-      if (data) {
-        const ui = data.userinfo as Record<string, unknown>;
-        const claims = data.idTokenClaims as Record<string, unknown>;
-        const user = toMockUser(ui, claims);
-        users.push(user);
-        console.log(
-          `\n  SUCCESS: ${user.first_name} ${user.last_name} (${user.gender})`,
+  // ponytail: fixed worker pool of 4; raise if eFaas dev tolerates more.
+  const users: ReturnType<typeof toMockUser>[] = [];
+  let failed: TestAccount[] = [];
+  let queue = [...accounts];
+  const worker = async () => {
+    for (let account = queue.shift(); account; account = queue.shift()) {
+      console.log(`\n=== ${account.username} ===`);
+      try {
+        const data = await fetchUserData(
+          discovery,
+          account.username,
+          account.password,
         );
-      } else {
-        console.log(`\n  FAILED`);
+        if (!data) throw new Error("login flow did not complete");
+        const user = toMockUser(
+          data.userinfo as Record<string, unknown>,
+          data.idTokenClaims as Record<string, unknown>,
+          account,
+        );
+        users.push(user);
+        console.log(`  SUCCESS ${account.username}: ${user.first_name} ${user.last_name}`);
+      } catch (err) {
+        failed.push(account);
+        console.log(`  FAILED ${account.username}: ${err}`);
       }
-    } catch (err) {
-      console.error(`  ERROR: ${err}`);
     }
+  };
+  await Promise.all(Array.from({ length: 4 }, worker));
+  if (failed.length) {
+    console.log(`\nRetrying ${failed.length} failed account(s) one at a time...`);
+    [queue, failed] = [failed, []];
+    await worker();
+  }
+
+  // Keep the spreadsheet's order.
+  const order = new Map(accounts.map((a, i) => [a.username, i]));
+  users.sort((a, b) => order.get(a.username)! - order.get(b.username)!);
+  if (failed.length) {
+    console.log(`\nFailed (${failed.length}): ${failed.map((a) => a.username).join(", ")}`);
   }
 
   const outputPath = "src/data/users.json";
