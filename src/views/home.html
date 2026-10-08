@@ -26,10 +26,20 @@
         --gray-200: #e5e7eb;
         --gray-300: #d1d5db;
         --gray-400: #9ca3af;
-        --gray-500: #6b7280;
+        --gray-500: #5b6370;
         --gray-700: #374151;
         --gray-900: #111827;
         --radius: 10px;
+      }
+
+      ::selection {
+        background: var(--primary-light);
+        color: var(--primary-dark);
+      }
+
+      html {
+        accent-color: var(--primary);
+        caret-color: var(--primary);
       }
 
       body {
@@ -62,38 +72,297 @@
 
       .navbar-text {
         font-size: 14px;
-        color: var(--gray-400);
+        color: var(--gray-500);
         margin-left: auto;
       }
 
-      /* Hero */
-      .hero {
-        background: linear-gradient(135deg, var(--primary) 0%, #1a56b8 100%);
-        color: #fff;
-        text-align: center;
-        padding: 64px 24px;
+      /* Tabs */
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        flex-wrap: wrap;
       }
 
-      .hero h1 {
-        font-size: 36px;
+      .tabs {
+        display: flex;
+        gap: 4px;
+        margin-left: auto;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .tabs a {
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gray-500);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .tabs a:hover {
+        background: var(--gray-100);
+        color: var(--gray-900);
+      }
+
+      .tabs a[aria-current="page"] {
+        background: var(--primary-light);
+        color: var(--primary);
+      }
+
+      .tabs a:focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 2px;
+      }
+
+      .js .panel:not(.active) {
+        display: none;
+      }
+
+      .page-title {
+        font-size: 28px;
         font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 8px;
+      }
+
+      .lead {
+        font-size: 16px;
+        color: var(--gray-700);
+        line-height: 1.6;
+        margin-bottom: 24px;
+        max-width: 640px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+
+      .stat {
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        padding: 14px 16px;
+      }
+
+      .stat dt {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--gray-500);
+        margin-bottom: 4px;
+      }
+
+      .stat dd {
+        font-size: 15px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+      }
+
+      .stat a {
+        color: var(--primary);
+      }
+
+      .quickstart .hint code,
+      .section-subtitle code,
+      .client-form .hint code {
+        display: inline;
+        background: var(--gray-200);
+        color: var(--gray-700);
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 12.5px;
+        margin: 0;
+      }
+
+      .stat dd code {
+        font-size: 13px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px 16px;
+        margin-top: 8px;
+      }
+
+      .inline-fieldset {
+        border: none !important;
+        padding: 0 !important;
+      }
+
+      .client-form select,
+      .toolbar select,
+      .toolbar input {
+        font: inherit;
+        font-size: 14px;
+        padding: 8px 10px;
+        border: 1px solid var(--gray-400);
+        border-radius: 6px;
+        background: #fff;
+        width: 100%;
+      }
+
+      .client-form input[type="email"],
+      .client-form input[type="tel"] {
+        font: inherit;
+        font-size: 14px;
+        padding: 8px 10px;
+        border: 1px solid var(--gray-400);
+        border-radius: 6px;
+        width: 100%;
+      }
+
+      .client-form details {
+        border: 1px solid var(--gray-200);
+        border-radius: 8px;
+        padding: 10px 14px;
+      }
+
+      .client-form summary {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gray-700);
+        cursor: pointer;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: end;
         margin-bottom: 12px;
       }
 
-      .hero p {
-        font-size: 18px;
-        opacity: 0.85;
-        max-width: 560px;
-        margin: 0 auto 24px;
-        line-height: 1.6;
+      .toolbar .field > label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gray-700);
+      }
+
+      .toolbar .grow {
+        flex: 1 1 260px;
+      }
+
+      .list-footer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+        color: var(--gray-500);
+        margin: -4px 0 12px;
+      }
+
+      .badge {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: var(--primary-light);
+        color: var(--primary);
+        white-space: nowrap;
+      }
+
+      .settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        padding: 20px;
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+
+      .card h3 {
+        font-size: 16px;
+      }
+
+      .card input[type="text"] {
+        font: inherit;
+        font-size: 14px;
+        padding: 8px 10px;
+        border: 1px solid var(--gray-400);
+        border-radius: 6px;
+        width: 100%;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .status-text {
+        font-size: 13px;
+        color: var(--gray-700);
+      }
+
+      .api-table {
+        table-layout: fixed;
+        min-width: 560px;
+      }
+
+      .api-table th:first-child {
+        width: 104px;
+      }
+
+      .api-table th:nth-child(2) {
+        width: 52%;
+      }
+
+      .api-table .endpoint-path {
+        overflow-wrap: anywhere;
+      }
+
+      .subsection-title {
+        font-size: 17px;
+        font-weight: 700;
+        margin: 32px 0 6px;
+      }
+
+      .cell-title {
+        font-weight: 600;
+      }
+
+      .cell-sub {
+        font-family: "SF Mono", "Consolas", monospace;
+        font-size: 12.5px;
+        color: var(--gray-500);
+        margin-top: 2px;
+      }
+
+      #userCount,
+      #clientCount,
+      #userResultCount {
+        font-variant-numeric: tabular-nums;
+      }
+
+      a {
+        text-underline-offset: 3px;
       }
 
       /* Content */
       .content {
         max-width: 900px;
         margin: 0 auto;
-        padding: 48px 24px;
+        padding: 32px 24px;
         flex: 1;
+        width: 100%;
       }
 
       /* Endpoints section */
@@ -115,7 +384,7 @@
         border-radius: var(--radius);
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         overflow: hidden;
-        margin-bottom: 48px;
+        margin-bottom: 32px;
       }
 
       .endpoint-table table {
@@ -164,6 +433,284 @@
         color: #1e40af;
       }
 
+      .method-put {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .method-delete {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Clients */
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+        margin-bottom: 16px;
+      }
+
+      .client-uris {
+        font-family: "SF Mono", "Consolas", monospace;
+        font-size: 12px;
+        color: var(--gray-700);
+        overflow-wrap: anywhere;
+        min-width: 220px;
+      }
+
+      .row-actions {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-end;
+      }
+
+      .row-actions .btn {
+        font-size: 13px;
+        padding: 4px 10px;
+        min-height: 30px;
+      }
+
+      .btn {
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 8px 14px;
+        min-height: 36px;
+        cursor: pointer;
+        border: 1px solid var(--gray-300);
+        background: #fff;
+        color: var(--gray-900);
+      }
+
+      .btn:hover {
+        background: var(--gray-50);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark);
+      }
+
+      .btn-danger {
+        color: #991b1b;
+        border-color: #fca5a5;
+      }
+
+      .btn:focus-visible,
+      .client-form input:focus-visible,
+      .client-form textarea:focus-visible,
+      .error-summary:focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 2px;
+      }
+
+      .client-status {
+        min-height: 24px;
+        font-size: 14px;
+        color: var(--gray-700);
+        margin-bottom: 24px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .section-header .section-title {
+        margin-bottom: 0;
+      }
+
+      dialog.modal {
+        border: none;
+        border-radius: var(--radius);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        padding: 0;
+        width: min(760px, calc(100vw - 32px));
+        max-height: calc(100vh - 32px);
+        margin: auto;
+      }
+
+      dialog.modal::backdrop {
+        background: rgba(17, 24, 39, 0.5);
+      }
+
+      .client-form {
+        padding: 20px 24px 24px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .dialog-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .btn-icon {
+        min-width: 36px;
+        padding: 6px;
+        line-height: 1;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 14px 16px;
+      }
+
+      .grid-2 > [hidden] {
+        display: none;
+      }
+
+      .client-form h3 {
+        font-size: 17px;
+      }
+
+      .client-form .hint,
+      .field-hint {
+        font-size: 13px;
+        color: var(--gray-500);
+        line-height: 1.5;
+      }
+
+      .field {
+        display: grid;
+        gap: 4px;
+        align-content: start;
+      }
+
+      .field > label,
+      .client-form legend {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gray-700);
+      }
+
+      .client-form input[type="text"],
+      .client-form input[type="url"],
+      .client-form textarea {
+        font: inherit;
+        font-size: 14px;
+        padding: 8px 10px;
+        border: 1px solid var(--gray-400);
+        border-radius: 6px;
+        width: 100%;
+      }
+
+      .client-form textarea {
+        font-family: "SF Mono", "Consolas", monospace;
+        font-size: 13px;
+        min-height: 64px;
+        resize: vertical;
+      }
+
+      .client-form fieldset {
+        border: 1px solid var(--gray-200);
+        border-radius: 8px;
+        padding: 8px 14px 12px;
+      }
+
+      .choices.choices-compact {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 6px 12px;
+      }
+
+      .choices.choices-compact label {
+        font-family: "SF Mono", "Consolas", monospace;
+        font-size: 12px;
+      }
+
+      .client-form legend {
+        padding: 0 6px;
+      }
+
+      .choices {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 8px 16px;
+        margin-top: 8px;
+      }
+
+      .choices label {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .choices input {
+        margin-top: 3px;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      .field-error {
+        font-size: 13px;
+        color: #991b1b;
+      }
+
+      .client-form [aria-invalid="true"] {
+        border-color: #b91c1c;
+        border-width: 2px;
+      }
+
+      .error-summary {
+        border: 2px solid #b91c1c;
+        border-radius: 8px;
+        padding: 16px;
+        background: #fef2f2;
+      }
+
+      .error-summary h4 {
+        font-size: 15px;
+        color: #991b1b;
+        margin-bottom: 8px;
+      }
+
+      .error-summary ul {
+        padding-left: 20px;
+        font-size: 14px;
+      }
+
+      .error-summary a {
+        color: #991b1b;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        position: sticky;
+        bottom: 0;
+        background: #fff;
+        margin: 0 -24px -24px;
+        padding: 12px 24px;
+        border-top: 1px solid var(--gray-200);
+      }
+
       .endpoint-path {
         font-family: "SF Mono", "Consolas", monospace;
         font-size: 13px;
@@ -180,43 +727,6 @@
       }
 
       /* Mock users */
-      .users-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 12px;
-        margin-bottom: 48px;
-      }
-
-      .user-card {
-        background: #fff;
-        border-radius: 8px;
-        padding: 14px 18px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .user-card .name {
-        font-weight: 600;
-        font-size: 14px;
-      }
-
-      .user-card .id {
-        font-family: "SF Mono", "Consolas", monospace;
-        font-size: 13px;
-        color: var(--gray-500);
-      }
-
-      .user-card .badge {
-        font-size: 11px;
-        padding: 2px 8px;
-        border-radius: 99px;
-        background: var(--primary-light);
-        color: var(--primary);
-        white-space: nowrap;
-      }
-
       /* Quick start */
       .quickstart {
         background: #fff;
@@ -255,7 +765,7 @@
         text-align: center;
         padding: 24px;
         font-size: 13px;
-        color: var(--gray-400);
+        color: var(--gray-500);
         border-top: 1px solid var(--gray-200);
       }
 
@@ -264,40 +774,107 @@
           grid-template-columns: 1fr;
         }
 
-        .hero h1 {
-          font-size: 28px;
+      }
+      @media (max-width: 640px) {
+        .navbar {
+          padding: 10px 16px;
+          gap: 8px;
         }
 
-        .hero p {
-          font-size: 16px;
+        .tabs {
+          margin-left: 0;
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .tabs a {
+          padding: 8px 8px;
+          font-size: 13px;
+        }
+
+        .content {
+          padding: 24px 16px;
+        }
+
+        .hide-sm {
+          display: none;
+        }
+
+        .endpoint-table td,
+        .endpoint-table th {
+          padding-left: 12px;
+          padding-right: 12px;
         }
       }
+
     </style>
   </head>
 
   <body>
-    <nav class="navbar">
+    <header class="navbar">
       <a href="/"
         ><img src="/assets/nefaas_logo_blue.svg" alt="neFaas" height="36"
       /></a>
-    </nav>
+      <nav class="tabs" aria-label="Sections">
+        <a href="#overview">Overview</a>
+        <a href="#endpoints">Endpoints</a>
+        <a href="#clients">Clients</a>
+        <a href="#users">Users</a>
+        <a href="#config">Settings</a>
+      </nav>
+    </header>
 
-    <div class="hero">
-      <h1>neFaas Mock Server</h1>
-      <p>
-        A mock OIDC server that works like the eFaas developer environment. Use
-        it locally or in CI for development and testing.
+    <main class="content">
+      <section class="panel" id="overview" aria-labelledby="overview-heading">
+      <h1 class="page-title" id="overview-heading">neFaas Mock Server</h1>
+      <p class="lead">
+        A mock eFaas OIDC server for local development and CI, with the same
+        endpoints, scopes, claims and flows as the eFaas developer environment.
       </p>
-    </div>
+      <dl class="stats">
+        <div class="stat">
+          <dt>Issuer</dt>
+          <dd><code>__BASE_URL__</code></dd>
+        </div>
+        <div class="stat">
+          <dt>Clients</dt>
+          <dd><a href="#clients"><span id="clientCount">…</span> registered</a></dd>
+        </div>
+        <div class="stat">
+          <dt>Mock users</dt>
+          <dd><a href="#users"><span id="userCount">…</span> users</a></dd>
+        </div>
+        <div class="stat">
+          <dt>Login password</dt>
+          <dd><code id="passwordStat">…</code></dd>
+        </div>
+      </dl>
+      <!-- Quick Start -->
+      <div class="quickstart">
+        <h2 class="section-title">Quick start</h2>
+        <code
+          >OIDC_ISSUER=__BASE_URL__
+CLIENT_ID=mock-efaas-client
+CLIENT_SECRET=mock-efaas-secret
+REDIRECT_URI=http://localhost:3000/callback</code
+        >
+        <p class="hint">
+          Point your app's OIDC provider to this server using the default client
+          credentials above. It accepts the redirect URIs listed under Clients;
+          edit it there to add yours. Unregistered client IDs are accepted
+          without checks unless <code>STRICT_CLIENTS=true</code>.
+        </p>
+      </div>
+      </section>
 
-    <div class="content">
+      <section class="panel" id="endpoints" aria-labelledby="endpoints-heading">
       <!-- Endpoints -->
-      <h2 class="section-title">Endpoints</h2>
+      <h2 class="section-title" id="endpoints-heading">eFaas endpoints</h2>
       <p class="section-subtitle">
-        All standard eFaas OIDC endpoints are available.
+        The same paths as the eFaas developer environment.
       </p>
-      <div class="endpoint-table">
-        <table>
+      <div class="endpoint-table table-scroll">
+        <table class="api-table">
           <thead>
             <tr>
               <th>Method</th>
@@ -355,6 +932,15 @@
               <td>End Session</td>
             </tr>
             <tr>
+              <td><span class="method method-get">GET</span></td>
+              <td class="endpoint-path">
+                <a href="__BASE_URL__/connect/checksession"
+                  >/connect/checksession</a
+                >
+              </td>
+              <td>Check Session iframe</td>
+            </tr>
+            <tr>
               <td><span class="method method-post">POST</span></td>
               <td class="endpoint-path">
                 <a href="__BASE_URL__/connect/revocation"
@@ -395,10 +981,10 @@
       </div>
 
       <!-- Mock Admin -->
-      <h2 class="section-title">Mock Admin API</h2>
-      <p class="section-subtitle">Manage mock server state at runtime.</p>
-      <div class="endpoint-table">
-        <table>
+      <h2 class="section-title">Mock admin API</h2>
+      <p class="section-subtitle">Everything the home page does, for scripts and CI.</p>
+      <div class="endpoint-table table-scroll">
+        <table class="api-table">
           <thead>
             <tr>
               <th>Method</th>
@@ -427,48 +1013,363 @@
               <td>Generate one-tap login code</td>
             </tr>
             <tr>
+              <td><span class="method method-get">GET</span></td>
+              <td class="endpoint-path">
+                <a href="__BASE_URL__/mock/clients">/mock/clients</a>
+              </td>
+              <td>List registered clients</td>
+            </tr>
+            <tr>
               <td><span class="method method-post">POST</span></td>
               <td class="endpoint-path">/mock/clients</td>
-              <td>Register a client</td>
+              <td>Register or replace a client</td>
+            </tr>
+            <tr>
+              <td><span class="method method-delete">DELETE</span></td>
+              <td class="endpoint-path">/mock/clients/:id</td>
+              <td>Remove a client</td>
+            </tr>
+            <tr>
+              <td><span class="method method-post">POST</span></td>
+              <td class="endpoint-path">/mock/users</td>
+              <td>Add or replace a user</td>
+            </tr>
+            <tr>
+              <td><span class="method method-delete">DELETE</span></td>
+              <td class="endpoint-path">/mock/users/:sub</td>
+              <td>Remove a user</td>
+            </tr>
+            <tr>
+              <td><span class="method method-get">GET</span></td>
+              <td class="endpoint-path">
+                <a href="__BASE_URL__/mock/settings">/mock/settings</a>
+              </td>
+              <td>Read settings</td>
+            </tr>
+            <tr>
+              <td><span class="method method-put">PUT</span></td>
+              <td class="endpoint-path">/mock/settings</td>
+              <td>Change settings</td>
+            </tr>
+            <tr>
+              <td><span class="method method-post">POST</span></td>
+              <td class="endpoint-path">/mock/reset?scope=users|all</td>
+              <td>Reset users, or everything</td>
             </tr>
           </tbody>
         </table>
       </div>
+      </section>
 
-      <!-- Mock Users -->
-      <h2 class="section-title">Mock Users</h2>
+      <section class="panel" id="clients" aria-labelledby="clients-heading">
+      <!-- Clients -->
+      <div class="section-header">
+        <h2 class="section-title" id="clients-heading">Clients</h2>
+        <button type="button" class="btn btn-primary" id="addClient">Add client</button>
+      </div>
       <p class="section-subtitle">
-        Pre-loaded test users. Default password:
-        <code
-          style="
-            background: var(--gray-200);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 13px;
-          "
-          >__MOCK_PASSWORD__</code
-        >
+        <span id="clientMode"></span> Changes last until restart; use
+        <code>CLIENTS_FILE</code> to keep them.
       </p>
-      <div class="users-grid" id="usersGrid">__MOCK_USERS__</div>
+      <div class="endpoint-table table-scroll">
+        <table aria-labelledby="clients-heading">
+          <thead>
+            <tr>
+              <th scope="col">Client ID</th>
+              <th scope="col">Type</th>
+              <th scope="col">Redirect URIs</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="clientRows">
+            <tr>
+              <td colspan="4">Loading clients…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="client-status" id="clientStatus" role="status"></div>
 
-      <!-- Quick Start -->
-      <div class="quickstart">
-        <h3>Quick Start</h3>
-        <code
-          >OIDC_ISSUER=__BASE_URL__
-CLIENT_ID=mock-efaas-client
-CLIENT_SECRET=mock-efaas-secret
-REDIRECT_URI=http://localhost:3000/callback</code
-        >
-        <p class="hint">
-          Point your app's OIDC provider to this server using the default client
-          credentials above. Any redirect URI is accepted.
+      <dialog class="modal" id="clientDialog" aria-labelledby="clientFormHeading">
+        <form class="client-form" id="clientForm" novalidate>
+          <div class="dialog-header">
+            <h3 id="clientFormHeading">Add client</h3>
+            <button type="button" class="btn btn-icon" id="closeDialog" aria-label="Close">✕</button>
+          </div>
+          <p class="hint">
+            Fields marked (required) must be completed. Saving an existing
+            client ID replaces it.
+          </p>
+
+          <div class="error-summary" id="errorSummary" tabindex="-1" aria-labelledby="errorHeading" hidden>
+            <h4 id="errorHeading">There is a problem</h4>
+            <ul id="errorList"></ul>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="f_client_id">Client ID (required)</label>
+              <input type="text" id="f_client_id" name="client_id" required spellcheck="false" autocomplete="off" />
+            </div>
+            <div class="field" id="secretField">
+              <label for="f_client_secret">Client secret (required)</label>
+              <input type="text" id="f_client_secret" name="client_secret" spellcheck="false" autocomplete="off" />
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Client type</legend>
+            <div class="choices">
+              <label><input type="radio" name="client_type" value="server_side" checked /> Server-side (has a secret)</label>
+              <label><input type="radio" name="client_type" value="non_server_side" /> SPA / mobile (PKCE, no secret)</label>
+            </div>
+          </fieldset>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="f_redirect_uris">Redirect URIs (required)</label>
+              <p class="field-hint" id="redirectHint">One per line, exact match.</p>
+              <textarea id="f_redirect_uris" name="redirect_uris" aria-describedby="redirectHint" spellcheck="false"></textarea>
+            </div>
+            <div class="field">
+              <label for="f_post_logout_redirect_uris">Post-logout redirect URIs</label>
+              <p class="field-hint" id="postLogoutHint">One per line, no trailing slash or query.</p>
+              <textarea id="f_post_logout_redirect_uris" name="post_logout_redirect_uris" aria-describedby="postLogoutHint" spellcheck="false"></textarea>
+            </div>
+            <div class="field">
+              <label for="f_backchannel_logout_uri">Back-channel logout URI</label>
+              <p class="field-hint" id="backchannelHint">POSTed a logout_token on sign-out.</p>
+              <input type="url" id="f_backchannel_logout_uri" name="backchannel_logout_uri" aria-describedby="backchannelHint" spellcheck="false" />
+            </div>
+            <div class="field">
+              <label for="f_frontchannel_logout_uri">Front-channel logout URI</label>
+              <p class="field-hint" id="frontchannelHint">Loaded in an iframe with ?logout_token=.</p>
+              <input type="url" id="f_frontchannel_logout_uri" name="frontchannel_logout_uri" aria-describedby="frontchannelHint" spellcheck="false" />
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Allowed scopes (select any; openid and efaas.profile are always included)</legend>
+            <div class="choices choices-compact">
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.email" /> efaas.email</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.mobile" /> efaas.mobile</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.birthdate" /> efaas.birthdate</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.photo" /> efaas.photo</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.work_permit_status" /> efaas.work_permit_status</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.passport_number" /> efaas.passport_number</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.country" /> efaas.country</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.permanent_address" /> efaas.permanent_address</label>
+                <label><input type="checkbox" name="allowed_scopes" value="efaas.current_address" /> efaas.current_address</label>
+                <label><input type="checkbox" name="allowed_scopes" value="profile" /> profile</label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Grant types (select any)</legend>
+            <div class="choices choices-compact">
+              <label><input type="checkbox" name="allowed_grant_types" value="authorization_code" checked /> authorization_code</label>
+              <label><input type="checkbox" name="allowed_grant_types" value="refresh_token" /> refresh_token</label>
+              <label><input type="checkbox" name="allowed_grant_types" value="implicit" /> implicit</label>
+              <label><input type="checkbox" name="allowed_grant_types" value="client_credentials" /> client_credentials</label>
+              <label><input type="checkbox" id="f_allow_offline_access" name="allow_offline_access" /> Allow offline_access</label>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save client</button>
+            <button type="button" class="btn" id="cancelDialog">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+      </section>
+
+      <section class="panel" id="users" aria-labelledby="users-heading">
+        <div class="section-header">
+          <h2 class="section-title" id="users-heading">Mock users</h2>
+          <button type="button" class="btn btn-primary" id="addUser">Add user</button>
+        </div>
+        <p class="section-subtitle">
+          Seeded from the eFaas developer test accounts. Sign in with the login
+          name; the password is set under
+          <a href="#config">Settings</a>.
         </p>
+        <div class="toolbar">
+          <div class="field grow">
+            <label for="userSearch">Search</label>
+            <input type="search" id="userSearch" placeholder="Name, login, ID, email or mobile" spellcheck="false" />
+          </div>
+          <div class="field">
+            <label for="userTypeFilter">User type</label>
+            <select id="userTypeFilter">
+              <option value="">All types</option>
+              <option>Maldivian</option>
+              <option>Work Permit Holder</option>
+              <option>Foreigners</option>
+            </select>
+          </div>
+        </div>
+        <div class="endpoint-table table-scroll">
+          <table aria-labelledby="users-heading" aria-describedby="userResultCount">
+            <thead>
+              <tr>
+                <th scope="col">User</th>
+                <th scope="col">Type</th>
+                <th scope="col" class="hide-sm">Verified</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="userRows">
+              <tr><td colspan="4">Loading users…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="list-footer">
+          <p id="userResultCount" role="status"></p>
+          <button type="button" class="btn" id="moreUsers" hidden>Show more</button>
+        </div>
+        <div class="client-status" id="userStatus" role="status"></div>
+
+        <dialog class="modal" id="userDialog" aria-labelledby="userFormHeading">
+          <form class="client-form" id="userForm" novalidate>
+            <div class="dialog-header">
+              <h3 id="userFormHeading">Add user</h3>
+              <button type="button" class="btn btn-icon" data-close aria-label="Close">✕</button>
+            </div>
+            <p class="hint">Fields marked (required) must be completed. <span id="userSub"></span></p>
+            <div class="error-summary" id="userErrorSummary" tabindex="-1" aria-labelledby="userErrorHeading" hidden>
+              <h4 id="userErrorHeading">There is a problem</h4>
+              <ul id="userErrorList"></ul>
+            </div>
+
+            <fieldset>
+              <legend>Account</legend>
+              <div class="grid-3">
+                <div class="field">
+                  <label for="u_idnumber">ID number (required)</label>
+                  <input type="text" id="u_idnumber" name="idnumber" spellcheck="false" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label for="u_username">Login name</label>
+                  <p class="field-hint" id="usernameHint">Defaults to the ID number.</p>
+                  <input type="text" id="u_username" name="username" aria-describedby="usernameHint" spellcheck="false" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label for="u_user_type_description">User type</label>
+                  <select id="u_user_type_description" name="user_type_description">
+                    <option>Maldivian</option>
+                    <option>Work Permit Holder</option>
+                    <option>Foreigners</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="u_verification_type">Verification type</label>
+                  <select id="u_verification_type" name="verification_type">
+                    <option value="biometric">biometric</option>
+                    <option value="in-person">in-person</option>
+                    <option value="NA">NA</option>
+                    <option value="">(none)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="u_last_verified_date">Last verified</label>
+                  <p class="field-hint" id="lvdHint">For example 6/4/2023 8:28:26 PM</p>
+                  <input type="text" id="u_last_verified_date" name="last_verified_date" aria-describedby="lvdHint" />
+                </div>
+                <fieldset class="inline-fieldset">
+                  <legend>Gender</legend>
+                  <div class="choices">
+                    <label><input type="radio" name="gender" value="M" checked /> M</label>
+                    <label><input type="radio" name="gender" value="F" /> F</label>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="choices">
+                <label><input type="checkbox" name="verified" /> Verified</label>
+                <label><input type="checkbox" name="is_workpermit_active" /> Work permit active</label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Name</legend>
+              <div class="grid-3">
+                <div class="field"><label for="u_first_name">First name (required)</label><input type="text" id="u_first_name" name="first_name" autocomplete="off" /></div>
+                <div class="field"><label for="u_middle_name">Middle name</label><input type="text" id="u_middle_name" name="middle_name" autocomplete="off" /></div>
+                <div class="field"><label for="u_last_name">Last name</label><input type="text" id="u_last_name" name="last_name" autocomplete="off" /></div>
+                <div class="field"><label for="u_first_name_dhivehi">First name (Dhivehi)</label><input type="text" id="u_first_name_dhivehi" name="first_name_dhivehi" lang="dv" dir="rtl" autocomplete="off" /></div>
+                <div class="field"><label for="u_middle_name_dhivehi">Middle name (Dhivehi)</label><input type="text" id="u_middle_name_dhivehi" name="middle_name_dhivehi" lang="dv" dir="rtl" autocomplete="off" /></div>
+                <div class="field"><label for="u_last_name_dhivehi">Last name (Dhivehi)</label><input type="text" id="u_last_name_dhivehi" name="last_name_dhivehi" lang="dv" dir="rtl" autocomplete="off" /></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Contact, birth and passport</legend>
+              <div class="grid-3">
+                <div class="field"><label for="u_email">Email</label><input type="email" id="u_email" name="email" autocomplete="off" /></div>
+                <div class="field"><label for="u_mobile">Mobile</label><input type="tel" id="u_mobile" name="mobile" autocomplete="off" /></div>
+                <div class="field"><label for="u_country_dialing_code">Dialing code</label><input type="text" id="u_country_dialing_code" name="country_dialing_code" autocomplete="off" /></div>
+                <div class="field"><label for="u_birthdate">Birthdate</label><p class="field-hint" id="birthHint">M/d/yyyy, for example 7/1/1990</p><input type="text" id="u_birthdate" name="birthdate" aria-describedby="birthHint" autocomplete="off" /></div>
+                <div class="field"><label for="u_passport_number">Passport number</label><input type="text" id="u_passport_number" name="passport_number" autocomplete="off" /></div>
+                <div class="field"><label for="u_previous_passport_number">Previous passport</label><input type="text" id="u_previous_passport_number" name="previous_passport_number" autocomplete="off" /></div>
+                <div class="field"><label for="u_country_name">Country</label><input type="text" id="u_country_name" name="country_name" autocomplete="off" /></div>
+                <div class="field"><label for="u_country_code">Country code (ISO numeric)</label><input type="text" inputmode="numeric" id="u_country_code" name="country_code" autocomplete="off" /></div>
+                <div class="field"><label for="u_country_code_alpha3">Country code (alpha-3)</label><input type="text" id="u_country_code_alpha3" name="country_code_alpha3" autocomplete="off" /></div>
+              </div>
+            </fieldset>
+
+            <details>
+              <summary>Permanent address</summary>
+              <div class="grid-3" id="permanentAddress"></div>
+            </details>
+            <details>
+              <summary>Current address</summary>
+              <div class="choices">
+                <label><input type="checkbox" id="hasCurrentAddress" /> Has a current address</label>
+              </div>
+              <div class="grid-3" id="currentAddress"></div>
+            </details>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save user</button>
+              <button type="button" class="btn" data-close>Cancel</button>
+            </div>
+          </form>
+        </dialog>
+      </section>
+
+      <section class="panel" id="config" aria-labelledby="config-heading">
+      <h2 class="section-title" id="config-heading">Settings</h2>
+      <p class="section-subtitle" id="stateNote">Changes are saved automatically.</p>
+      <div class="settings-grid">
+        <form class="card" id="settingsForm" novalidate>
+          <h3>Sign-in and clients</h3>
+          <div class="field">
+            <label for="s_mockPassword">Login password</label>
+            <p class="field-hint" id="passwordHint">Every mock user signs in with this. Leave empty to accept any password.</p>
+            <input type="text" id="s_mockPassword" name="mockPassword" aria-describedby="passwordHint" spellcheck="false" autocomplete="off" />
+          </div>
+          <div class="choices">
+            <label><input type="checkbox" id="s_strictClients" name="strictClients" aria-describedby="strictHint" /> Strict client mode</label>
+          </div>
+          <p class="field-hint" id="strictHint">Reject client IDs that aren't registered, like real eFaas. When off, unregistered clients skip all checks.</p>
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary">Save settings</button>
+            <p class="status-text" id="settingsStatus" role="status"></p>
+          </div>
+        </form>
+        <div class="card">
+          <h3>Reset</h3>
+          <p class="field-hint">The signing key is kept, so existing tokens stay valid.</p>
+          <div class="form-row">
+            <button type="button" class="btn" data-reset="users">Reset users</button>
+            <button type="button" class="btn btn-danger" data-reset="all">Reset everything</button>
+          </div>
+          <p class="status-text" id="resetStatus" role="status"></p>
+        </div>
       </div>
 
       <!-- Customization -->
       <div class="quickstart">
-        <h3>Register Additional Clients</h3>
+        <h3>Register clients from scripts</h3>
         <code
           >curl -X POST __BASE_URL__/mock/clients \ -H "Content-Type:
           application/json" \ -d
@@ -482,34 +1383,14 @@ REDIRECT_URI=http://localhost:3000/callback</code
           "allow_offline_access":true}'</code
         >
         <p class="hint">
-          Or pre-load clients from a file:
-          <strong>CLIENTS_FILE=./my-clients.json bun src/index.ts</strong>
+          Or load clients from a file on every start:
+          <code>CLIENTS_FILE=./my-clients.json</code>
         </p>
       </div>
 
-      <div class="quickstart">
-        <h3>Custom Users</h3>
-        <p class="hint" style="margin-bottom: 12px">
-          Load your own mock users from a JSON file. The file should be an array
-          of user objects matching the format at
-          <code
-            style="
-              display: inline;
-              background: var(--gray-200);
-              color: var(--gray-700);
-              padding: 2px 6px;
-              border-radius: 4px;
-              font-size: 13px;
-            "
-            >src/data/users.json</code
-          >.
-        </p>
-        <code>USERS_FILE=./my-users.json bun src/index.ts</code>
-      </div>
-
-      <div class="quickstart">
-        <h3>Environment Variables</h3>
-        <div class="endpoint-table" style="margin: 0; box-shadow: none">
+      <h3 class="subsection-title">Environment variables</h3>
+      <p class="section-subtitle">All optional. The ones that change a setting lock it in the UI.</p>
+      <div class="endpoint-table table-scroll">
           <table>
             <thead>
               <tr>
@@ -530,26 +1411,706 @@ REDIRECT_URI=http://localhost:3000/callback</code
                 <td>Server host</td>
               </tr>
               <tr>
+                <td class="endpoint-path">BASE_URL</td>
+                <td>http://HOST:PORT</td>
+                <td>Issuer URL in tokens (set this behind Docker or a proxy)</td>
+              </tr>
+              <tr>
+                <td class="endpoint-path">STATE_DIR</td>
+                <td>.nefaas</td>
+                <td>Where settings, clients, users and the signing key are saved</td>
+              </tr>
+              <tr>
                 <td class="endpoint-path">MOCK_PASSWORD</td>
-                <td>@123456</td>
-                <td>Password for the login page</td>
+                <td>(none)</td>
+                <td>Overrides the login password setting and locks it</td>
+              </tr>
+              <tr>
+                <td class="endpoint-path">STRICT_CLIENTS</td>
+                <td>(none)</td>
+                <td>Overrides strict client mode and locks it</td>
               </tr>
               <tr>
                 <td class="endpoint-path">USERS_FILE</td>
                 <td>(none)</td>
-                <td>Path to a custom users JSON file</td>
+                <td>Replaces the users on every start</td>
               </tr>
               <tr>
                 <td class="endpoint-path">CLIENTS_FILE</td>
                 <td>(none)</td>
-                <td>Path to a custom clients JSON file</td>
+                <td>Adds or replaces clients on every start</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
+      </section>
+
+    </main>
 
     <footer>neFaas Mock Server</footer>
+    <script>
+      (() => {
+        document.documentElement.classList.add("js");
+        const panels = [...document.querySelectorAll(".panel")];
+        const links = [...document.querySelectorAll(".tabs a")];
+        const show = () => {
+          const id = location.hash.slice(1);
+          const target =
+            panels.find((p) => p.id === id || p.querySelector(`[id="${id}"]`)) ||
+            panels[0];
+          for (const p of panels) p.classList.toggle("active", p === target);
+          for (const a of links) {
+            if (a.hash === `#${target.id}`) a.setAttribute("aria-current", "page");
+            else a.removeAttribute("aria-current");
+          }
+          window.scrollTo(0, 0);
+        };
+        addEventListener("hashchange", show);
+        show();
+      })();
+    </script>
+    <script>
+      (() => {
+        const form = document.getElementById("clientForm");
+        const rows = document.getElementById("clientRows");
+        const status = document.getElementById("clientStatus");
+        const summary = document.getElementById("errorSummary");
+        const errorList = document.getElementById("errorList");
+        const secretField = document.getElementById("secretField");
+        const dialog = document.getElementById("clientDialog");
+        const heading = document.getElementById("clientFormHeading");
+        const openDialog = (title) => {
+          heading.textContent = title;
+          syncType();
+          dialog.showModal();
+          form.elements.client_id.focus();
+        };
+        const resetForm = () => {
+          clearErrors();
+          form.reset();
+          syncType();
+        };
+        const FIELD_IDS = {
+          client_id: "f_client_id",
+          client_secret: "f_client_secret",
+          redirect_uris: "f_redirect_uris",
+          post_logout_redirect_uris: "f_post_logout_redirect_uris",
+          backchannel_logout_uri: "f_backchannel_logout_uri",
+          frontchannel_logout_uri: "f_frontchannel_logout_uri",
+        };
+        let clients = [];
+
+        const showMode = (strict) => {
+          document.getElementById("clientMode").textContent = strict
+            ? "Strict mode: only these clients can sign in, and all of their settings are enforced."
+            : "Lenient mode: settings are enforced for these clients; unregistered client IDs are accepted without checks.";
+        };
+        document.addEventListener("nefaas:settings", (e) => showMode(e.detail.settings.strictClients));
+
+        const lines = (v) =>
+          v.split("\n").map((s) => s.trim()).filter(Boolean);
+        const checked = (name) =>
+          [...form.querySelectorAll(`input[name="${name}"]:checked`)].map((i) => i.value);
+        const isServerSide = () =>
+          form.elements.client_type.value === "server_side";
+        const isUrl = (s) => {
+          try {
+            new URL(s);
+            return true;
+          } catch {
+            return false;
+          }
+        };
+
+        const syncType = () => {
+          secretField.hidden = !isServerSide();
+        };
+        for (const r of form.elements.client_type) r.addEventListener("change", syncType);
+
+        const setStatus = (message, undo) => {
+          status.replaceChildren(document.createTextNode(message));
+          if (undo) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "btn";
+            b.textContent = "Undo";
+            b.addEventListener("click", undo);
+            status.append(b);
+          }
+        };
+
+        const render = () => {
+          rows.replaceChildren();
+          if (clients.length === 0) {
+            const tr = rows.insertRow();
+            const td = tr.insertCell();
+            td.colSpan = 4;
+            td.textContent = "No clients registered.";
+            return;
+          }
+          for (const c of clients) {
+            const tr = rows.insertRow();
+            const id = tr.insertCell();
+            id.className = "endpoint-path";
+            id.textContent = c.client_id;
+            tr.insertCell().textContent =
+              c.client_type === "server_side" ? "Server-side" : "Non-server-side";
+            const uris = tr.insertCell();
+            uris.className = "client-uris";
+            uris.textContent = c.redirect_uris.join("\n");
+            uris.style.whiteSpace = "pre-line";
+            const actions = document.createElement("div");
+            actions.className = "row-actions";
+            const edit = document.createElement("button");
+            edit.type = "button";
+            edit.className = "btn";
+            edit.textContent = "Edit";
+            edit.setAttribute("aria-label", `Edit ${c.client_id}`);
+            edit.addEventListener("click", () => fill(c));
+            const del = document.createElement("button");
+            del.type = "button";
+            del.className = "btn btn-danger";
+            del.textContent = "Delete";
+            del.setAttribute("aria-label", `Delete ${c.client_id}`);
+            del.addEventListener("click", () => remove(c));
+            actions.append(edit, del);
+            tr.insertCell().append(actions);
+          }
+        };
+
+        const load = async () => {
+          try {
+            const res = await fetch("/mock/clients");
+            clients = await res.json();
+            document.getElementById("clientCount").textContent = clients.length;
+            render();
+          } catch (err) {
+            setStatus(`Could not load clients: ${err.message}`);
+          }
+        };
+
+        const save = async (client) => {
+          const res = await fetch("/mock/clients", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(client),
+          });
+          const body = await res.json();
+          if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+          return body.client;
+        };
+
+        const remove = async (client) => {
+          const res = await fetch(`/mock/clients/${encodeURIComponent(client.client_id)}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) {
+            setStatus(`Could not delete ${client.client_id}.`);
+            return;
+          }
+          await load();
+          setStatus(`Deleted ${client.client_id}.`, async () => {
+            await save(client);
+            await load();
+            setStatus(`Restored ${client.client_id}.`);
+          });
+        };
+
+        const fill = (c) => {
+          clearErrors();
+          form.reset();
+          form.elements.client_id.value = c.client_id;
+          form.elements.client_type.value = c.client_type;
+          form.elements.client_secret.value = c.client_secret || "";
+          form.elements.redirect_uris.value = c.redirect_uris.join("\n");
+          form.elements.post_logout_redirect_uris.value = c.post_logout_redirect_uris.join("\n");
+          form.elements.backchannel_logout_uri.value = c.backchannel_logout_uri || "";
+          form.elements.frontchannel_logout_uri.value = c.frontchannel_logout_uri || "";
+          for (const i of form.querySelectorAll('input[name="allowed_scopes"]')) {
+            i.checked = c.allowed_scopes.includes(i.value);
+          }
+          for (const i of form.querySelectorAll('input[name="allowed_grant_types"]')) {
+            i.checked = c.allowed_grant_types.includes(i.value);
+          }
+          form.elements.allow_offline_access.checked = c.allow_offline_access;
+          openDialog(`Edit ${c.client_id}`);
+        };
+
+        const clearErrors = () => {
+          summary.hidden = true;
+          errorList.replaceChildren();
+          for (const el of form.querySelectorAll("[aria-invalid]")) {
+            el.removeAttribute("aria-invalid");
+            const describedBy = (el.getAttribute("aria-describedby") || "")
+              .split(" ")
+              .filter((id) => id && id !== `${el.id}-error`)
+              .join(" ");
+            if (describedBy) el.setAttribute("aria-describedby", describedBy);
+            else el.removeAttribute("aria-describedby");
+          }
+          for (const el of form.querySelectorAll(".field-error")) el.remove();
+        };
+
+        const showErrors = (errors) => {
+          for (const { id, message } of errors) {
+            const li = document.createElement("li");
+            if (id) {
+              const el = document.getElementById(id);
+              const a = document.createElement("a");
+              a.href = `#${id}`;
+              a.textContent = message;
+              a.addEventListener("click", (e) => {
+                e.preventDefault();
+                el.focus();
+              });
+              li.append(a);
+              el.setAttribute("aria-invalid", "true");
+              const p = document.createElement("p");
+              p.className = "field-error";
+              p.id = `${id}-error`;
+              p.innerHTML = "<strong>Error:</strong> ";
+              p.append(message);
+              el.before(p);
+              el.setAttribute(
+                "aria-describedby",
+                [el.getAttribute("aria-describedby"), p.id].filter(Boolean).join(" "),
+              );
+            } else {
+              li.textContent = message;
+            }
+            errorList.append(li);
+          }
+          document.getElementById("errorHeading").textContent =
+            errors.length === 1 ? "There is 1 problem" : `There are ${errors.length} problems`;
+          summary.hidden = false;
+          summary.focus();
+        };
+
+        const validate = (c) => {
+          const errors = [];
+          if (!c.client_id)
+            errors.push({ id: FIELD_IDS.client_id, message: "Enter a client ID." });
+          if (c.client_type === "server_side" && !c.client_secret)
+            errors.push({ id: FIELD_IDS.client_secret, message: "Enter a client secret, or choose Non-server-side." });
+          if (c.redirect_uris.length === 0)
+            errors.push({ id: FIELD_IDS.redirect_uris, message: "Enter at least one redirect URI." });
+          const badRedirect = c.redirect_uris.find((u) => !isUrl(u));
+          if (badRedirect)
+            errors.push({ id: FIELD_IDS.redirect_uris, message: `Redirect URI "${badRedirect}" is not an absolute URL, for example http://localhost:3000/callback.` });
+          const badLogout = c.post_logout_redirect_uris.find((u) => !isUrl(u));
+          if (badLogout)
+            errors.push({ id: FIELD_IDS.post_logout_redirect_uris, message: `Post-logout redirect URI "${badLogout}" is not an absolute URL.` });
+          for (const key of ["backchannel_logout_uri", "frontchannel_logout_uri"]) {
+            if (c[key] && !isUrl(c[key]))
+              errors.push({ id: FIELD_IDS[key], message: `${key === "backchannel_logout_uri" ? "Back" : "Front"}-channel logout URI is not an absolute URL.` });
+          }
+          return errors;
+        };
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearErrors();
+          const client = {
+            client_id: form.elements.client_id.value.trim(),
+            client_type: form.elements.client_type.value,
+            client_secret: isServerSide() ? form.elements.client_secret.value.trim() : null,
+            redirect_uris: lines(form.elements.redirect_uris.value),
+            post_logout_redirect_uris: lines(form.elements.post_logout_redirect_uris.value),
+            backchannel_logout_uri: form.elements.backchannel_logout_uri.value.trim() || null,
+            frontchannel_logout_uri: form.elements.frontchannel_logout_uri.value.trim() || null,
+            allowed_scopes: checked("allowed_scopes"),
+            allowed_grant_types: checked("allowed_grant_types"),
+            allow_offline_access: form.elements.allow_offline_access.checked,
+          };
+          const errors = validate(client);
+          if (errors.length) return showErrors(errors);
+          try {
+            const saved = await save(client);
+            await load();
+            setStatus(`Saved ${saved.client_id}.`);
+            dialog.close();
+          } catch (err) {
+            const key = Object.keys(FIELD_IDS).find((k) => err.message.startsWith(k));
+            showErrors([{ id: key && FIELD_IDS[key], message: err.message }]);
+          }
+        });
+
+        document.getElementById("addClient").addEventListener("click", () => {
+          resetForm();
+          openDialog("Add client");
+        });
+        for (const id of ["closeDialog", "cancelDialog"]) {
+          document.getElementById(id).addEventListener("click", () => dialog.close());
+        }
+        document.addEventListener("nefaas:reset", load);
+
+        load();
+      })();
+    </script>
+    <script>
+      // Users tab, settings, reset and overview counts.
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const ADDRESS_FIELDS = [
+          "AddressLine1", "AddressLine2", "Road", "AtollAbbreviation",
+          "AtollAbbreviationDhivehi", "IslandName", "IslandNameDhivehi",
+          "HomeNameDhivehi", "Ward", "WardAbbreviationEnglish",
+          "WardAbbreviationDhivehi", "Country", "CountryISOThreeDigitCode",
+          "CountryISOThreeLetterCode",
+        ];
+        const PAGE = 25;
+        const form = $("userForm");
+        const dialog = $("userDialog");
+        let users = [];
+        let shown = PAGE;
+        let editing = null;
+
+        // ---- Address inputs (generated: 14 fields x 2) ----
+        const buildAddress = (containerId, prefix) => {
+          for (const f of ADDRESS_FIELDS) {
+            const div = document.createElement("div");
+            div.className = "field";
+            const label = document.createElement("label");
+            label.htmlFor = `${prefix}_${f}`;
+            label.textContent = f.replace(/([a-z])([A-Z])/g, "$1 $2");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.id = `${prefix}_${f}`;
+            input.autocomplete = "off";
+            if (f.endsWith("Dhivehi")) {
+              input.lang = "dv";
+              input.dir = "rtl";
+            }
+            div.append(label, input);
+            $(containerId).append(div);
+          }
+        };
+        buildAddress("permanentAddress", "pa");
+        buildAddress("currentAddress", "ca");
+        const syncCurrent = () => {
+          for (const i of $("currentAddress").querySelectorAll("input")) {
+            i.disabled = !$("hasCurrentAddress").checked;
+          }
+        };
+        $("hasCurrentAddress").addEventListener("change", syncCurrent);
+        const readAddress = (prefix) =>
+          Object.fromEntries(ADDRESS_FIELDS.map((f) => [f, $(`${prefix}_${f}`).value.trim()]));
+        const fillAddress = (prefix, a) => {
+          for (const f of ADDRESS_FIELDS) $(`${prefix}_${f}`).value = a?.[f] ?? "";
+        };
+
+        // ---- List ----
+        const fullName = (u) => [u.first_name, u.middle_name, u.last_name].filter(Boolean).join(" ");
+        const matches = () => {
+          const q = $("userSearch").value.trim().toLowerCase();
+          const type = $("userTypeFilter").value;
+          return users.filter(
+            (u) =>
+              (!type || u.user_type_description === type) &&
+              (!q ||
+                [fullName(u), u.username, u.idnumber, u.email, u.mobile, u.passport_number]
+                  .some((v) => v && v.toLowerCase().includes(q))),
+          );
+        };
+        const render = () => {
+          const list = matches();
+          const rows = $("userRows");
+          rows.replaceChildren();
+          for (const u of list.slice(0, shown)) {
+            const tr = rows.insertRow();
+            const who = tr.insertCell();
+            const name = document.createElement("div");
+            name.className = "cell-title";
+            name.textContent = fullName(u);
+            const login = document.createElement("div");
+            login.className = "cell-sub";
+            login.textContent = u.username || u.idnumber;
+            who.append(name, login);
+            const type = document.createElement("span");
+            type.className = "badge";
+            type.textContent = u.user_type_description;
+            tr.insertCell().append(type);
+            const verified = tr.insertCell();
+            verified.className = "hide-sm";
+            verified.textContent = u.verified ? `Yes, ${u.verification_type}` : "No";
+            const actions = document.createElement("div");
+            actions.className = "row-actions";
+            const edit = document.createElement("button");
+            edit.type = "button";
+            edit.className = "btn";
+            edit.textContent = "Edit";
+            edit.setAttribute("aria-label", `Edit ${u.username || u.idnumber}`);
+            edit.addEventListener("click", () => openEditor(u));
+            const del = document.createElement("button");
+            del.type = "button";
+            del.className = "btn btn-danger";
+            del.textContent = "Delete";
+            del.setAttribute("aria-label", `Delete ${u.username || u.idnumber}`);
+            del.addEventListener("click", () => remove(u));
+            actions.append(edit, del);
+            tr.insertCell().append(actions);
+          }
+          if (list.length === 0) {
+            const td = rows.insertRow().insertCell();
+            td.colSpan = 4;
+            td.textContent = "No users match. Try a shorter search or another user type.";
+          }
+          $("userResultCount").textContent =
+            list.length === users.length
+              ? `${users.length} users`
+              : `${list.length} of ${users.length} users match`;
+          $("moreUsers").hidden = list.length <= shown;
+        };
+        const load = async () => {
+          users = await (await fetch("/mock/users")).json();
+          $("userCount").textContent = users.length;
+          render();
+        };
+        $("userSearch").addEventListener("input", () => {
+          shown = PAGE;
+          render();
+        });
+        $("userTypeFilter").addEventListener("change", () => {
+          shown = PAGE;
+          render();
+        });
+        $("moreUsers").addEventListener("click", () => {
+          shown += PAGE * 4;
+          render();
+        });
+        const setStatus = (message, undo) => {
+          const status = $("userStatus");
+          status.replaceChildren(document.createTextNode(message));
+          if (undo) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "btn";
+            b.textContent = "Undo";
+            b.addEventListener("click", undo);
+            status.append(b);
+          }
+        };
+
+        const save = async (user) => {
+          const res = await fetch("/mock/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user),
+          });
+          const body = await res.json();
+          if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+          return body.user;
+        };
+        const remove = async (u) => {
+          const res = await fetch(`/mock/users/${encodeURIComponent(u.sub)}`, { method: "DELETE" });
+          if (!res.ok) {
+            setStatus((await res.json()).error || "Could not delete user.");
+            return;
+          }
+          await load();
+          setStatus(`Deleted ${fullName(u)}.`, async () => {
+            await save(u);
+            await load();
+            setStatus(`Restored ${fullName(u)}.`);
+          });
+        };
+
+        // ---- Editor ----
+        const FIELDS = [
+          "idnumber", "username", "user_type_description", "verification_type",
+          "last_verified_date", "first_name", "middle_name", "last_name",
+          "first_name_dhivehi", "middle_name_dhivehi", "last_name_dhivehi",
+          "email", "mobile", "country_dialing_code", "birthdate",
+          "passport_number", "previous_passport_number", "country_name",
+          "country_code", "country_code_alpha3",
+        ];
+        const clearErrors = () => {
+          $("userErrorSummary").hidden = true;
+          $("userErrorList").replaceChildren();
+          for (const el of form.querySelectorAll("[aria-invalid]")) {
+            el.removeAttribute("aria-invalid");
+            const ids = (el.getAttribute("aria-describedby") || "")
+              .split(" ")
+              .filter((id) => id && id !== `${el.id}-error`);
+            if (ids.length) el.setAttribute("aria-describedby", ids.join(" "));
+            else el.removeAttribute("aria-describedby");
+          }
+          for (const el of form.querySelectorAll(".field-error")) el.remove();
+        };
+        const showErrors = (errors) => {
+          for (const { id, message } of errors) {
+            const li = document.createElement("li");
+            const el = id && $(id);
+            if (el) {
+              const a = document.createElement("a");
+              a.href = `#${id}`;
+              a.textContent = message;
+              a.addEventListener("click", (e) => {
+                e.preventDefault();
+                el.closest("details")?.setAttribute("open", "");
+                el.focus();
+              });
+              li.append(a);
+              el.setAttribute("aria-invalid", "true");
+              const p = document.createElement("p");
+              p.className = "field-error";
+              p.id = `${id}-error`;
+              p.innerHTML = "<strong>Error:</strong> ";
+              p.append(message);
+              el.before(p);
+              el.setAttribute(
+                "aria-describedby",
+                [el.getAttribute("aria-describedby"), p.id].filter(Boolean).join(" "),
+              );
+            } else {
+              li.textContent = message;
+            }
+            $("userErrorList").append(li);
+          }
+          $("userErrorHeading").textContent =
+            errors.length === 1 ? "There is 1 problem" : `There are ${errors.length} problems`;
+          $("userErrorSummary").hidden = false;
+          $("userErrorSummary").focus();
+        };
+        const openEditor = (u) => {
+          editing = u;
+          clearErrors();
+          form.reset();
+          for (const f of FIELDS) form.elements[f].value = u?.[f] ?? "";
+          if (!u) {
+            form.elements.user_type_description.value = "Maldivian";
+            form.elements.verification_type.value = "in-person";
+            form.elements.country_name.value = "Maldives";
+            form.elements.country_code.value = "462";
+            form.elements.country_code_alpha3.value = "MDV";
+            form.elements.country_dialing_code.value = "+960";
+          }
+          form.elements.gender.value = u?.gender ?? "M";
+          form.elements.verified.checked = u?.verified ?? true;
+          form.elements.is_workpermit_active.checked = u?.is_workpermit_active ?? false;
+          fillAddress("pa", u?.permanent_address);
+          fillAddress("ca", u?.current_address);
+          $("hasCurrentAddress").checked = Boolean(u?.current_address);
+          syncCurrent();
+          $("userFormHeading").textContent = u ? `Edit ${fullName(u)}` : "Add user";
+          $("userSub").textContent = u ? `sub: ${u.sub}` : "A sub is generated when you save.";
+          dialog.showModal();
+          form.elements.idnumber.focus();
+        };
+        $("addUser").addEventListener("click", () => openEditor(null));
+        for (const b of dialog.querySelectorAll("[data-close]")) {
+          b.addEventListener("click", () => dialog.close());
+        }
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearErrors();
+          const user = Object.fromEntries(FIELDS.map((f) => [f, form.elements[f].value.trim()]));
+          const errors = [];
+          if (!user.idnumber) errors.push({ id: "u_idnumber", message: "Enter an ID number." });
+          if (!user.first_name) errors.push({ id: "u_first_name", message: "Enter a first name." });
+          if (user.country_code && !/^\d+$/.test(user.country_code)) {
+            errors.push({ id: "u_country_code", message: "Country code must be digits only, for example 462." });
+          }
+          if (errors.length) return showErrors(errors);
+          Object.assign(user, {
+            sub: editing?.sub,
+            country_code: Number(user.country_code || 462),
+            gender: form.elements.gender.value,
+            verified: form.elements.verified.checked,
+            is_workpermit_active: form.elements.is_workpermit_active.checked,
+            permanent_address: readAddress("pa"),
+            current_address: $("hasCurrentAddress").checked ? readAddress("ca") : null,
+          });
+          try {
+            const saved = await save(user);
+            await load();
+            setStatus(`Saved ${fullName(saved)}.`);
+            dialog.close();
+          } catch (err) {
+            const field = FIELDS.find((f) => err.message.startsWith(f));
+            const id = err.message.startsWith("Login")
+              ? "u_username"
+              : field && `u_${field}`;
+            showErrors([{ id, message: err.message }]);
+          }
+        });
+
+        // ---- Settings ----
+        const settingsForm = $("settingsForm");
+        const applySettings = (data) => {
+          const { settings, locked, state_file } = data;
+          $("s_mockPassword").value = settings.mockPassword;
+          $("s_strictClients").checked = settings.strictClients;
+          for (const [key, id, env] of [
+            ["mockPassword", "s_mockPassword", "MOCK_PASSWORD"],
+            ["strictClients", "s_strictClients", "STRICT_CLIENTS"],
+          ]) {
+            const isLocked = locked.includes(key);
+            $(id).disabled = isLocked;
+            const note = $(`${id}-locked`) || document.createElement("p");
+            note.id = `${id}-locked`;
+            note.className = "field-hint";
+            note.textContent = isLocked ? `Set by the ${env} environment variable.` : "";
+            $(id).closest(".field, .choices").after(note);
+          }
+          $("passwordStat").textContent = settings.mockPassword || "(any)";
+          $("stateNote").textContent = state_file
+            ? `Changes are saved automatically to ${state_file}.`
+            : "Changes last until the server restarts (STATE_DIR is empty).";
+          document.dispatchEvent(new CustomEvent("nefaas:settings", { detail: data }));
+        };
+        const loadSettings = async () =>
+          applySettings(await (await fetch("/mock/settings")).json());
+        settingsForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const body = {};
+          if (!$("s_mockPassword").disabled) body.mockPassword = $("s_mockPassword").value;
+          if (!$("s_strictClients").disabled) body.strictClients = $("s_strictClients").checked;
+          const res = await fetch("/mock/settings", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            $("settingsStatus").textContent = `Not saved: ${data.error}`;
+            return;
+          }
+          applySettings(data);
+          $("settingsStatus").textContent = "Settings saved.";
+        });
+
+        // ---- Reset (click twice to confirm) ----
+        for (const button of document.querySelectorAll("[data-reset]")) {
+          const label = button.textContent;
+          let armed = null;
+          button.addEventListener("click", async () => {
+            if (!armed) {
+              button.textContent = "Click again to confirm";
+              armed = setTimeout(() => {
+                button.textContent = label;
+                armed = null;
+              }, 4000);
+              return;
+            }
+            clearTimeout(armed);
+            armed = null;
+            button.textContent = label;
+            const scope = button.dataset.reset;
+            await fetch(`/mock/reset?scope=${scope}`, { method: "POST" });
+            await Promise.all([load(), loadSettings()]);
+            document.dispatchEvent(new Event("nefaas:reset"));
+            $("resetStatus").textContent =
+              scope === "all"
+                ? "Users, clients and settings were reset to defaults."
+                : "Users were reset to the eFaas test accounts.";
+          });
+        }
+
+        load();
+        loadSettings();
+      })();
+    </script>
   </body>
 </html>

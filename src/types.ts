@@ -34,6 +34,8 @@ export interface CurrentAddress {
 
 export interface MockUser {
   sub: string;
+  /** Login name (eFaas test-account username). Not a claim; defaults to idnumber. */
+  username?: string;
   first_name: string;
   middle_name: string;
   last_name: string;

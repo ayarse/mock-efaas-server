@@ -1,6 +1,7 @@
 import type { OAuth2Issuer } from "oauth2-mock-server";
-import { BASE_URL } from "../config.ts";
-import { DEFAULT_USER, MOCK_USERS } from "../data/users.ts";
+import { ACCESS_TOKEN_AUDIENCE, BASE_URL } from "../config.ts";
+import { revokedTokens } from "../store/session.ts";
+import { MOCK_USERS } from "../store/users.ts";
 import type { MockUser } from "../types.ts";
 
 export function generateCode(): string {
@@ -10,20 +11,20 @@ export function generateCode(): string {
   );
 }
 
+/** Finds a user by login input; unknown input falls back to the first user. */
 export function findUser(input: string): MockUser {
+  const q = input.trim().toLowerCase();
   return (
-    MOCK_USERS.find(
-      (u) =>
-        u.idnumber === input ||
-        u.mobile === input ||
-        u.passport_number === input ||
-        u.email === input,
-    ) ?? DEFAULT_USER
+    MOCK_USERS.find((u) =>
+      [u.username, u.idnumber, u.mobile, u.passport_number, u.email].some(
+        (v) => v && v.toLowerCase() === q,
+      ),
+    ) ?? (MOCK_USERS[0] as MockUser)
   );
 }
 
 export function findUserBySub(sub: string): MockUser {
-  return MOCK_USERS.find((u) => u.sub === sub) ?? DEFAULT_USER;
+  return MOCK_USERS.find((u) => u.sub === sub) ?? (MOCK_USERS[0] as MockUser);
 }
 
 export function buildUserClaims(
@@ -168,7 +169,7 @@ export async function buildAccessToken(
     expiresIn,
     scopesOrTransform: (_header, payload) => {
       payload.sub = sub;
-      payload.aud = `${BASE_URL}/resources`;
+      payload.aud = ACCESS_TOKEN_AUDIENCE;
       payload.client_id = clientId;
       payload.scope = scopes.join(" ");
       payload.sid = sessionId;
@@ -206,6 +207,85 @@ export async function buildIdToken(
       if (atHash) payload.at_hash = atHash;
     },
   });
+}
+
+/** Back/front-channel logout token (OIDC Back-Channel Logout 1.0, section 2.4). */
+export async function buildLogoutToken(
+  issuer: OAuth2Issuer,
+  sub: string,
+  clientId: string,
+  sessionId: string,
+): Promise<string> {
+  return issuer.buildToken({
+    expiresIn: 300,
+    scopesOrTransform: (header, payload) => {
+      header.typ = "logout+jwt";
+      payload.sub = sub;
+      payload.aud = clientId;
+      payload.sid = sessionId;
+      payload.jti = crypto.randomUUID();
+      payload.events = {
+        "http://schemas.openid.net/event/backchannel-logout": {},
+      };
+    },
+  });
+}
+
+/**
+ * OIDC Session Management `session_state`: hash(client_id + origin + sid + salt).salt.
+ * The check_session iframe recomputes this from the session cookie.
+ */
+export function computeSessionState(
+  clientId: string,
+  redirectUri: string,
+  sessionId: string,
+): string {
+  const salt = crypto.randomUUID().replace(/-/g, "").slice(0, 16);
+  const origin = new URL(redirectUri).origin;
+  const hash = new Bun.CryptoHasher("sha256")
+    .update(clientId + origin + sessionId + salt)
+    .digest("base64url");
+  return `${hash}.${salt}`;
+}
+
+/**
+ * Verifies a JWT issued by this server (RS256 signature, expiry, revocation).
+ * Returns the payload, or null if the token is not valid.
+ */
+export async function verifyToken(
+  issuer: OAuth2Issuer,
+  token: string,
+  { ignoreExpiry = false } = {},
+): Promise<Record<string, unknown> | null> {
+  const [h, p, s] = token.split(".");
+  if (!h || !p || !s) return null;
+  try {
+    const header = JSON.parse(Buffer.from(h, "base64url").toString());
+    const jwk = issuer.keys.toJSON().find((k) => k.kid === header.kid);
+    if (!jwk) return null;
+    const key = await crypto.subtle.importKey(
+      "jwk",
+      jwk,
+      { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+      false,
+      ["verify"],
+    );
+    const valid = await crypto.subtle.verify(
+      "RSASSA-PKCS1-v1_5",
+      key,
+      Buffer.from(s, "base64url"),
+      new TextEncoder().encode(`${h}.${p}`),
+    );
+    if (!valid) return null;
+    const payload = JSON.parse(Buffer.from(p, "base64url").toString());
+    if (!ignoreExpiry && (payload.exp as number) < Date.now() / 1000) {
+      return null;
+    }
+    if (payload.jti && revokedTokens.has(payload.jti)) return null;
+    return payload;
+  } catch {
+    return null;
+  }
 }
 
 export function decodeJwtPayload(token: string): Record<string, unknown> {

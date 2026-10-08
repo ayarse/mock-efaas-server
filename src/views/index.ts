@@ -1,7 +1,9 @@
 export {
+  buildErrorHtml,
   buildFormPostHtml,
   buildLoggedOutHtml,
+  CHECK_SESSION_HTML,
   loadHomePage,
-  loadLoginPage,
   PLACEHOLDER_PHOTO_SVG,
+  renderLoginPage,
 } from "./templates.ts";

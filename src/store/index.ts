@@ -1,4 +1,12 @@
-export { addClient, clients, findClient } from "./clients.ts";
+export {
+  addClient,
+  checkClient,
+  clientAllowsScope,
+  clients,
+  findClient,
+  parseClient,
+  removeClient,
+} from "./clients.ts";
 export {
   authCodes,
   cleanupCodes,
@@ -6,4 +14,5 @@ export {
   oneTapCodes,
   refreshTokens,
   revokedTokens,
+  sessions,
 } from "./session.ts";

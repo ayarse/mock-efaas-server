@@ -37,3 +37,5 @@ docs/*
 !docs/nefaas.postman_collection.json
 !docs/FLOWS.md
 .claude/
+# neFaas saved state (contains the signing key)
+.nefaas

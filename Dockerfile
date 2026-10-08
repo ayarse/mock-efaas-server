@@ -12,6 +12,8 @@ COPY package.json .
 
 ENV HOST=0.0.0.0
 ENV BASE_URL=http://localhost:36445
+# Clients, users, settings and the signing key live here.
+VOLUME /app/.nefaas
 EXPOSE 36445
 
 CMD ["bun", "src/index.ts"]

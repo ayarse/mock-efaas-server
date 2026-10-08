@@ -9,6 +9,12 @@ export const refreshTokens = new Map<
 
 export const revokedTokens = new Set<string>();
 
+/** eFaas browser sessions (sid → user and the clients signed in under it), used for single sign-out. */
+export const sessions = new Map<
+  string,
+  { sub: string; clientIds: Set<string> }
+>();
+
 export const oneTapCodes = new Map<
   string,
   { userSub: string; createdAt: number }

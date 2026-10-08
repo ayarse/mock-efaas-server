@@ -11,7 +11,6 @@ export function getDiscoveryDocument(): Record<string, unknown> {
     check_session_iframe: `${BASE_URL}/connect/checksession`,
     revocation_endpoint: `${BASE_URL}/connect/revocation`,
     introspection_endpoint: `${BASE_URL}/connect/introspect`,
-    device_authorization_endpoint: `${BASE_URL}/connect/deviceauthorization`,
     frontchannel_logout_supported: true,
     frontchannel_logout_session_supported: true,
     backchannel_logout_supported: true,
@@ -90,7 +89,6 @@ export function getDiscoveryDocument(): Record<string, unknown> {
       "client_credentials",
       "refresh_token",
       "implicit",
-      "urn:ietf:params:oauth:grant-type:device_code",
     ],
     response_types_supported: [
       "code",
