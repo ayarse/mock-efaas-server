@@ -1,0 +1,2 @@
+OCR-B outline font (ocrb10.otf) by Matthew Skala, from CTAN fonts/ocr-b-outline.
+License: "you may freely use, modify, and/or distribute any of these files, without limitation."

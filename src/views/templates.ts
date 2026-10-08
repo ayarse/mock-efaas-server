@@ -65,9 +65,9 @@ function buildMessagePage(title: string, body: string, extra = ""): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>neFaas - ${title}</title>
-<style>body{font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:16px;box-sizing:border-box;background:#f3f4f6;}
-.card{background:#fff;padding:48px;border-radius:12px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.08);max-width:560px;}
-h1{color:#12469A;margin:0 0 8px;font-size:24px;} p{color:#4b5563;line-height:1.5;overflow-wrap:anywhere;}
+<style>body{font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:16px;box-sizing:border-box;background:#f3f6f5;color:#14213d;}
+.card{background:#fff;padding:48px;border-radius:12px;text-align:center;border:1px solid #d8dfe2;border-top:6px solid #12469a;max-width:560px;}
+h1{color:#12469A;margin:0 0 8px;font-size:24px;} p{color:#3b4759;line-height:1.5;overflow-wrap:anywhere;}
 .notice{color:#92400e;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px;text-align:left;}
 .home{margin-top:24px;font-size:14px;} a{color:#12469A;text-underline-offset:3px;}
 iframe{display:none;}</style></head>

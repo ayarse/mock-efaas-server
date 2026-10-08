@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T19:45:56.287Z",
+  "title": "Design System: neFaas",
+  "extensions": {
+    "colorMeta": {
+      "efaas-blue": {
+        "role": "primary",
+        "displayName": "eFaas Blue",
+        "canonical": "#12469a",
+        "oklch": "oklch(41.5% 0.148 260.1)",
+        "tonalRamp": [
+          "oklch(15% 0.148 260.1)",
+          "oklch(26% 0.148 260.1)",
+          "oklch(37% 0.148 260.1)",
+          "oklch(48% 0.148 260.1)",
+          "oklch(59% 0.148 260.1)",
+          "oklch(70% 0.148 260.1)",
+          "oklch(82% 0.148 260.1)",
+          "oklch(95% 0.148 260.1)"
+        ]
+      },
+      "blue-deep": {
+        "role": "primary",
+        "displayName": "Deep Blue",
+        "canonical": "#0c3170",
+        "oklch": "oklch(33.0% 0.117 260.5)",
+        "tonalRamp": [
+          "oklch(15% 0.117 260.5)",
+          "oklch(26% 0.117 260.5)",
+          "oklch(37% 0.117 260.5)",
+          "oklch(48% 0.117 260.5)",
+          "oklch(59% 0.117 260.5)",
+          "oklch(70% 0.117 260.5)",
+          "oklch(82% 0.117 260.5)",
+          "oklch(95% 0.117 260.5)"
+        ]
+      },
+      "blue-tint": {
+        "role": "primary",
+        "displayName": "Blue Tint",
+        "canonical": "#e6edf7",
+        "oklch": "oklch(94.4% 0.015 257.2)",
+        "tonalRamp": [
+          "oklch(15% 0.015 257.2)",
+          "oklch(26% 0.015 257.2)",
+          "oklch(37% 0.015 257.2)",
+          "oklch(48% 0.015 257.2)",
+          "oklch(59% 0.015 257.2)",
+          "oklch(70% 0.015 257.2)",
+          "oklch(82% 0.015 257.2)",
+          "oklch(95% 0.015 257.2)"
+        ]
+      },
+      "verified-teal": {
+        "role": "secondary",
+        "displayName": "Verified Teal",
+        "canonical": "#1f6f75",
+        "oklch": "oklch(49.8% 0.075 202.4)",
+        "tonalRamp": [
+          "oklch(15% 0.075 202.4)",
+          "oklch(26% 0.075 202.4)",
+          "oklch(37% 0.075 202.4)",
+          "oklch(48% 0.075 202.4)",
+          "oklch(59% 0.075 202.4)",
+          "oklch(70% 0.075 202.4)",
+          "oklch(82% 0.075 202.4)",
+          "oklch(95% 0.075 202.4)"
+        ]
+      },
+      "verified-tint": {
+        "role": "secondary",
+        "displayName": "Verified Tint",
+        "canonical": "#e1f0ef",
+        "oklch": "oklch(94.4% 0.016 192.1)",
+        "tonalRamp": [
+          "oklch(15% 0.016 192.1)",
+          "oklch(26% 0.016 192.1)",
+          "oklch(37% 0.016 192.1)",
+          "oklch(48% 0.016 192.1)",
+          "oklch(59% 0.016 192.1)",
+          "oklch(70% 0.016 192.1)",
+          "oklch(82% 0.016 192.1)",
+          "oklch(95% 0.016 192.1)"
+        ]
+      },
+      "guilloche-teal": {
+        "role": "secondary",
+        "displayName": "Guilloche Teal",
+        "canonical": "#2f7f86",
+        "oklch": "oklch(55.1% 0.077 203.3)",
+        "tonalRamp": [
+          "oklch(15% 0.077 203.3)",
+          "oklch(26% 0.077 203.3)",
+          "oklch(37% 0.077 203.3)",
+          "oklch(48% 0.077 203.3)",
+          "oklch(59% 0.077 203.3)",
+          "oklch(70% 0.077 203.3)",
+          "oklch(82% 0.077 203.3)",
+          "oklch(95% 0.077 203.3)"
+        ]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Warn Amber",
+        "canonical": "#8a5300",
+        "oklch": "oklch(49.4% 0.109 66.9)",
+        "tonalRamp": [
+          "oklch(15% 0.109 66.9)",
+          "oklch(26% 0.109 66.9)",
+          "oklch(37% 0.109 66.9)",
+          "oklch(48% 0.109 66.9)",
+          "oklch(59% 0.109 66.9)",
+          "oklch(70% 0.109 66.9)",
+          "oklch(82% 0.109 66.9)",
+          "oklch(95% 0.109 66.9)"
+        ]
+      },
+      "warn-tint": {
+        "role": "tertiary",
+        "displayName": "Warn Tint",
+        "canonical": "#fbefd9",
+        "oklch": "oklch(95.6% 0.032 82.8)",
+        "tonalRamp": [
+          "oklch(15% 0.032 82.8)",
+          "oklch(26% 0.032 82.8)",
+          "oklch(37% 0.032 82.8)",
+          "oklch(48% 0.032 82.8)",
+          "oklch(59% 0.032 82.8)",
+          "oklch(70% 0.032 82.8)",
+          "oklch(82% 0.032 82.8)",
+          "oklch(95% 0.032 82.8)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Danger Red",
+        "canonical": "#b42318",
+        "oklch": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "oklch(15% 0.150 29.5)",
+          "oklch(26% 0.150 29.5)",
+          "oklch(37% 0.150 29.5)",
+          "oklch(48% 0.150 29.5)",
+          "oklch(59% 0.150 29.5)",
+          "oklch(70% 0.150 29.5)",
+          "oklch(82% 0.150 29.5)",
+          "oklch(95% 0.150 29.5)"
+        ]
+      },
+      "danger-tint": {
+        "role": "tertiary",
+        "displayName": "Danger Tint",
+        "canonical": "#fdecea",
+        "oklch": "oklch(95.6% 0.019 25.6)",
+        "tonalRamp": [
+          "oklch(15% 0.019 25.6)",
+          "oklch(26% 0.019 25.6)",
+          "oklch(37% 0.019 25.6)",
+          "oklch(48% 0.019 25.6)",
+          "oklch(59% 0.019 25.6)",
+          "oklch(70% 0.019 25.6)",
+          "oklch(82% 0.019 25.6)",
+          "oklch(95% 0.019 25.6)"
+        ]
+      },
+      "security-paper": {
+        "role": "neutral",
+        "displayName": "Security Paper",
+        "canonical": "#f3f6f5",
+        "oklch": "oklch(97.1% 0.003 174.5)",
+        "tonalRamp": [
+          "oklch(15% 0.003 174.5)",
+          "oklch(26% 0.003 174.5)",
+          "oklch(37% 0.003 174.5)",
+          "oklch(48% 0.003 174.5)",
+          "oklch(59% 0.003 174.5)",
+          "oklch(70% 0.003 174.5)",
+          "oklch(82% 0.003 174.5)",
+          "oklch(95% 0.003 174.5)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(37% 0.000 89.9)",
+          "oklch(48% 0.000 89.9)",
+          "oklch(59% 0.000 89.9)",
+          "oklch(70% 0.000 89.9)",
+          "oklch(82% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#d8dfe2",
+        "oklch": "oklch(89.9% 0.009 225.1)",
+        "tonalRamp": [
+          "oklch(15% 0.009 225.1)",
+          "oklch(26% 0.009 225.1)",
+          "oklch(37% 0.009 225.1)",
+          "oklch(48% 0.009 225.1)",
+          "oklch(59% 0.009 225.1)",
+          "oklch(70% 0.009 225.1)",
+          "oklch(82% 0.009 225.1)",
+          "oklch(95% 0.009 225.1)"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Line Strong",
+        "canonical": "#b6c2c8",
+        "oklch": "oklch(80.7% 0.016 229.0)",
+        "tonalRamp": [
+          "oklch(15% 0.016 229.0)",
+          "oklch(26% 0.016 229.0)",
+          "oklch(37% 0.016 229.0)",
+          "oklch(48% 0.016 229.0)",
+          "oklch(59% 0.016 229.0)",
+          "oklch(70% 0.016 229.0)",
+          "oklch(82% 0.016 229.0)",
+          "oklch(95% 0.016 229.0)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#14213d",
+        "oklch": "oklch(25.2% 0.056 264.0)",
+        "tonalRamp": [
+          "oklch(15% 0.056 264.0)",
+          "oklch(26% 0.056 264.0)",
+          "oklch(37% 0.056 264.0)",
+          "oklch(48% 0.056 264.0)",
+          "oklch(59% 0.056 264.0)",
+          "oklch(70% 0.056 264.0)",
+          "oklch(82% 0.056 264.0)",
+          "oklch(95% 0.056 264.0)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "#3b4759",
+        "oklch": "oklch(39.5% 0.034 258.4)",
+        "tonalRamp": [
+          "oklch(15% 0.034 258.4)",
+          "oklch(26% 0.034 258.4)",
+          "oklch(37% 0.034 258.4)",
+          "oklch(48% 0.034 258.4)",
+          "oklch(59% 0.034 258.4)",
+          "oklch(70% 0.034 258.4)",
+          "oklch(82% 0.034 258.4)",
+          "oklch(95% 0.034 258.4)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "#566273",
+        "oklch": "oklch(49.2% 0.031 257.1)",
+        "tonalRamp": [
+          "oklch(15% 0.031 257.1)",
+          "oklch(26% 0.031 257.1)",
+          "oklch(37% 0.031 257.1)",
+          "oklch(48% 0.031 257.1)",
+          "oklch(59% 0.031 257.1)",
+          "oklch(70% 0.031 257.1)",
+          "oklch(82% 0.031 257.1)",
+          "oklch(95% 0.031 257.1)"
+        ]
+      },
+      "code-well": {
+        "role": "neutral",
+        "displayName": "Code Well",
+        "canonical": "#10213f",
+        "oklch": "oklch(25.1% 0.061 260.9)",
+        "tonalRamp": [
+          "oklch(15% 0.061 260.9)",
+          "oklch(26% 0.061 260.9)",
+          "oklch(37% 0.061 260.9)",
+          "oklch(48% 0.061 260.9)",
+          "oklch(59% 0.061 260.9)",
+          "oklch(70% 0.061 260.9)",
+          "oklch(82% 0.061 260.9)",
+          "oklch(95% 0.061 260.9)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page title",
+        "purpose": "The single Overview page title."
+      },
+      "title": {
+        "displayName": "Section title",
+        "purpose": "Tab section titles; subsections step to 17px, panel/card headings to 16px."
+      },
+      "title-sm": {
+        "displayName": "Panel heading",
+        "purpose": "Connect panel, identities column, settings cards, quick start."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Page default text."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Table cells, inputs, buttons, panel intros."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, legends, definition terms (ink-2)."
+      },
+      "label-caps": {
+        "displayName": "Table header",
+        "purpose": "Uppercase column labels in tables only; badges use the same size and weight without caps."
+      },
+      "identifier": {
+        "displayName": "Identifier (OCR-B)",
+        "purpose": "ID numbers on identity cards and login IDs in the users table. Self-hosted from assets/fonts/ocrb10.otf."
+      },
+      "mrz": {
+        "displayName": "Machine-readable zone (OCR-B)",
+        "purpose": "The two-line MRZ strip on identity cards, whitespace preserved."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "URLs, endpoint paths, secrets, client URIs, method tags."
+      }
+    },
+    "fonts": [
+      {
+        "family": "OCR-B",
+        "src": "/assets/fonts/ocrb10.otf",
+        "format": "opentype",
+        "display": "swap",
+        "license": "assets/fonts/OCRB-LICENSE.txt"
+      }
+    ],
+    "shadows": [
+      {
+        "name": "bar-hairline",
+        "value": "0 1px 0 rgba(10, 30, 70, 0.4)",
+        "purpose": "Bottom edge of the blue top bar."
+      },
+      {
+        "name": "modal",
+        "value": "0 24px 64px rgba(12, 32, 70, 0.28)",
+        "purpose": "Dialogs only; backdrop rgba(12, 32, 70, 0.45)."
+      },
+      {
+        "name": "login-card",
+        "value": "0 4px 24px rgba(0, 0, 0, 0.08)",
+        "purpose": "Login page card (eFaas-style login only)."
+      },
+      {
+        "name": "login-dropdown",
+        "value": "0 8px 24px rgba(0, 0, 0, 0.12)",
+        "purpose": "Login page user combo dropdown."
+      }
+    ],
+    "focus": [
+      {
+        "name": "control",
+        "value": "outline: 3px solid color-mix(in srgb, #12469a 45%, transparent); outline-offset: 1px; border-color: #12469a",
+        "purpose": "Buttons, inputs, selects, error summary."
+      },
+      {
+        "name": "identity-card",
+        "value": "outline: 3px solid #12469a; outline-offset: 2px",
+        "purpose": "Identity card buttons."
+      },
+      {
+        "name": "tab",
+        "value": "outline: 2px solid #fff; outline-offset: -6px",
+        "purpose": "Tabs on the blue bar."
+      }
+    ],
+    "ornament": [
+      {
+        "name": "guilloche-band",
+        "value": "16 interleaved sine lines across 1600x64, stroke 0.6, white at 14% opacity",
+        "purpose": "Top bar background behind logo and tabs."
+      },
+      {
+        "name": "guilloche-rosette",
+        "value": "14 offset rings (r=120, 9- and 23-lobe modulation), stroke 0.7, guilloche-teal at 22% opacity, 260px anchored top right",
+        "purpose": "Identity card security print."
+      },
+      {
+        "name": "idcard-ground",
+        "value": "linear-gradient(135deg, #fbfdfc 0%, #eef5f3 100%)",
+        "purpose": "Identity card paper."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "120ms ease-out (background-color, border-color)",
+        "purpose": "Buttons."
+      },
+      {
+        "name": "card-lift",
+        "value": "160ms ease-out (border-color, transform translateY(-1px))",
+        "purpose": "Identity card hover."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition: none",
+        "purpose": "All transitions removed under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack-overview",
+        "value": "860px",
+        "purpose": "Overview collapses to one column."
+      },
+      {
+        "name": "small",
+        "value": "640px",
+        "purpose": "Top bar wraps, tabs spread, padding tightens, definition list stacks, low-priority columns hide."
+      }
+    ],
+    "layout": {
+      "contentMaxWidth": "1040px",
+      "navbarHeight": "64px",
+      "dialogMaxWidth": "780px"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action per area: Copy as .env, Save, Add.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Copy as .env</button>",
+      "css": ".ds-btn{font:600 14px/1.2 \"Segoe UI\",system-ui,sans-serif;border-radius:8px;padding:8px 14px;min-height:36px;cursor:pointer;border:1px solid var(--line-strong, #b6c2c8);background:var(--surface, #fff);color:var(--ink, #14213d);transition:background-color 120ms ease-out,border-color 120ms ease-out}.ds-btn-primary{background:var(--blue, #12469a);border-color:var(--blue, #12469a);color:#fff}.ds-btn-primary:hover{background:var(--blue-deep, #0c3170);border-color:var(--blue-deep, #0c3170)}.ds-btn:focus-visible{outline:3px solid color-mix(in srgb,#12469a 45%,transparent);outline-offset:1px;border-color:#12469a}"
+    },
+    {
+      "name": "Default and Danger Buttons",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Secondary actions and destructive actions (Edit, Delete, Reset everything).",
+      "html": "<div class=\"ds-row\"><button class=\"ds-btn\">Edit</button><button class=\"ds-btn ds-btn-danger\">Delete</button></div>",
+      "css": ".ds-row{display:flex;gap:6px}.ds-btn{font:600 14px/1.2 \"Segoe UI\",system-ui,sans-serif;border-radius:8px;padding:8px 14px;min-height:36px;cursor:pointer;border:1px solid #b6c2c8;background:#fff;color:#14213d;transition:background-color 120ms ease-out,border-color 120ms ease-out}.ds-btn:hover{background:#f4f7f6;border-color:#566273}.ds-btn-danger{color:#b42318;border-color:#f0b6b0}.ds-btn-danger:hover{background:#fdecea;border-color:#b42318}.ds-btn:focus-visible{outline:3px solid color-mix(in srgb,#12469a 45%,transparent);outline-offset:1px;border-color:#12469a}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form fields with a visible label and hint.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-pw\">Login password</label><p class=\"ds-hint\">Every mock user signs in with this.</p><input id=\"ds-pw\" type=\"text\" placeholder=\"Any password\"></div>",
+      "css": ".ds-field{display:grid;gap:4px;font-family:\"Segoe UI\",system-ui,sans-serif}.ds-field label{font-size:13px;font-weight:600;color:#3b4759}.ds-hint{font-size:13px;color:#566273;margin:0}.ds-field input{font:inherit;font-size:14px;padding:8px 10px;border:1px solid #b6c2c8;border-radius:8px;background:#fff;color:#14213d}.ds-field input::placeholder{color:#626d7c}.ds-field input:focus-visible{outline:3px solid color-mix(in srgb,#12469a 45%,transparent);outline-offset:1px;border-color:#12469a}"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "navbar",
+      "description": "Sticky eFaas-blue bar with the guilloche band, logo left, five tabs right.",
+      "html": "<header class=\"ds-nav\"><svg class=\"ds-band\" viewBox=\"0 0 400 64\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0 32 C50 10 100 54 150 32 S250 10 300 32 350 54 400 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".6\"/><path d=\"M0 26 C50 50 100 14 150 30 S250 50 300 26 350 14 400 30\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".6\"/><path d=\"M0 38 C50 18 100 46 150 36 S250 18 300 40 350 46 400 36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".6\"/></svg><strong class=\"ds-logo\">neFaas</strong><nav class=\"ds-tabs\"><a aria-current=\"page\" href=\"#\">Overview</a><a href=\"#\">Endpoints</a><a href=\"#\">Clients</a><a href=\"#\">Users</a><a href=\"#\">Settings</a></nav></header>",
+      "css": ".ds-nav{position:relative;overflow:hidden;background:#12469a;color:#fff;display:flex;align-items:center;gap:16px;padding:0 24px;min-height:64px;box-shadow:0 1px 0 rgba(10,30,70,.4);font-family:\"Segoe UI\",system-ui,sans-serif}.ds-band{position:absolute;inset:0;width:100%;height:100%;opacity:.14;color:#fff;pointer-events:none}.ds-logo{position:relative;font-size:20px}.ds-tabs{position:relative;display:flex;gap:4px;margin-left:auto}.ds-tabs a{position:relative;padding:20px 12px;font-size:14px;font-weight:600;color:rgba(255,255,255,.82);text-decoration:none}.ds-tabs a:hover,.ds-tabs a[aria-current=page]{color:#fff}.ds-tabs a[aria-current=page]::after{content:\"\";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:#fff}.ds-tabs a:focus-visible{outline:2px solid #fff;outline-offset:-6px;border-radius:8px}"
+    },
+    {
+      "name": "Badge and Method Tags",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "User-type pill and HTTP method tags from the one status ramp.",
+      "html": "<div class=\"ds-tags\"><span class=\"ds-badge\">Maldivian</span><span class=\"ds-method ds-get\">GET</span><span class=\"ds-method ds-post\">POST</span><span class=\"ds-method ds-put\">PUT</span><span class=\"ds-method ds-del\">DELETE</span></div>",
+      "css": ".ds-tags{display:flex;gap:8px;align-items:center;font-family:\"Segoe UI\",system-ui,sans-serif}.ds-badge{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:#e6edf7;color:#0c3170}.ds-method{font:700 11px ui-monospace,\"SF Mono\",Consolas,monospace;letter-spacing:.04em;padding:2px 8px;border-radius:4px}.ds-get{background:#e1f0ef;color:#1f6f75}.ds-post{background:#e6edf7;color:#0c3170}.ds-put{background:#fbefd9;color:#8a5300}.ds-del{background:#fdecea;color:#b42318}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White work surface with a hairline border on the paper ground.",
+      "html": "<div class=\"ds-card\"><h3>Reset</h3><p>The signing key is kept, so existing tokens stay valid.</p></div>",
+      "css": ".ds-card{background:#fff;border:1px solid #d8dfe2;border-radius:12px;padding:24px;display:grid;gap:12px;font-family:\"Segoe UI\",system-ui,sans-serif;color:#14213d}.ds-card h3{margin:0;font-size:16px}.ds-card p{margin:0;font-size:13px;color:#566273}"
+    },
+    {
+      "name": "Connect Definition List",
+      "kind": "custom",
+      "description": "Hairline-ruled term / value / copy rows for connection details.",
+      "html": "<dl class=\"ds-dl\"><dt>Issuer</dt><dd><code>http://localhost:36445</code></dd><dd><button class=\"ds-copy\">Copy</button></dd><dt>Client ID</dt><dd><code>mock-efaas-client</code></dd><dd><button class=\"ds-copy\">Copy</button></dd></dl>",
+      "css": ".ds-dl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;border-top:1px solid #d8dfe2;margin:0;font-family:\"Segoe UI\",system-ui,sans-serif}.ds-dl dt,.ds-dl dd{margin:0;padding:10px 0;border-bottom:1px solid #d8dfe2;display:flex;align-items:center}.ds-dl dt{font-size:13px;font-weight:600;color:#3b4759;padding-right:16px}.ds-dl code{font:13px ui-monospace,\"SF Mono\",Consolas,monospace;color:#14213d}.ds-copy{font:600 12px \"Segoe UI\",system-ui,sans-serif;color:#12469a;background:none;border:1px solid transparent;border-radius:6px;padding:4px 8px;margin-left:8px;cursor:pointer}.ds-copy:hover{background:#e6edf7}.ds-copy:focus-visible{outline:2px solid #12469a;outline-offset:1px}"
+    },
+    {
+      "name": "Identity Card",
+      "kind": "custom",
+      "refersTo": "identity-card",
+      "description": "The signature: a test user as an ID document with guilloche rosette, OCR-B ID, and MRZ strip.",
+      "html": "<button class=\"ds-idcard\" type=\"button\"><svg class=\"ds-rosette\" viewBox=\"0 0 240 240\" aria-hidden=\"true\"><circle cx=\"120\" cy=\"120\" r=\"74\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".7\"/><circle cx=\"128\" cy=\"114\" r=\"70\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".7\"/><circle cx=\"112\" cy=\"126\" r=\"78\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".7\"/><circle cx=\"124\" cy=\"130\" r=\"66\" fill=\"none\" stroke=\"currentColor\" stroke-width=\".7\"/></svg><div class=\"ds-photo\"><svg viewBox=\"0 0 56 64\" aria-hidden=\"true\"><circle cx=\"28\" cy=\"20\" r=\"12\" fill=\"currentColor\" opacity=\".55\"/><path d=\"M4 64c0-14 10.7-24 24-24s24 10 24 24z\" fill=\"currentColor\" opacity=\".55\"/></svg></div><div class=\"ds-fields\"><div class=\"ds-title\"><span class=\"ds-name\">Aishath Ahmed</span><span class=\"ds-badge\">Maldivian</span></div><div class=\"ds-dv\" lang=\"dv\">ޢާއިޝަތު އަޙްމަދު</div><div class=\"ds-meta\"><span>ID<b class=\"ds-id\">A000111</b></span><span>Born<b>01/15/1990</b></span><span>Verified<b class=\"ds-ok\">Biometric</b></span></div></div><div class=\"ds-mrz\"><div class=\"ds-mrz-lines\">I&lt;MDVA000111&lt;&lt;900115F&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;\nAHMED&lt;&lt;AISHATH&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div><div class=\"ds-micro\">neFaas test identity · not a real document</div></div></button>",
+      "css": "@font-face{font-family:\"OCR-B\";src:url(\"/assets/fonts/ocrb10.otf\") format(\"opentype\");font-display:swap}.ds-idcard{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px 16px;padding:16px 16px 0;width:360px;background:linear-gradient(135deg,#fbfdfc 0%,#eef5f3 100%);border:1px solid #b6c2c8;border-radius:12px;color:#14213d;text-align:left;overflow:hidden;font:15px/1.5 \"Segoe UI\",system-ui,sans-serif;cursor:pointer;transition:border-color 160ms ease-out,transform 160ms ease-out}.ds-idcard:hover{border-color:#12469a;transform:translateY(-1px)}.ds-idcard:focus-visible{outline:3px solid #12469a;outline-offset:2px}.ds-rosette{position:absolute;right:-40px;top:-50px;width:260px;height:260px;color:#2f7f86;opacity:.22;pointer-events:none}.ds-photo{position:relative;width:64px;height:80px;border-radius:6px;background:#e6edf7;border:1px solid #d8dfe2;display:grid;place-items:center;color:#12469a;overflow:hidden}.ds-photo svg{width:56px;height:64px;margin-top:16px}.ds-fields{position:relative;display:grid;gap:2px;align-content:start;min-width:0}.ds-title{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.ds-name{font-size:15px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ds-badge{flex-shrink:0;font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:#e6edf7;color:#0c3170}.ds-dv{font-size:14px;color:#3b4759;direction:rtl;text-align:left;unicode-bidi:plaintext}.ds-meta{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:4px;font-size:12px;color:#566273}.ds-meta b{display:block;font-size:13px;font-weight:600;color:#14213d;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ds-meta .ds-id{font-family:\"OCR-B\",ui-monospace,monospace;font-size:14px;font-weight:400;letter-spacing:.04em}.ds-meta .ds-ok{color:#1f6f75}.ds-mrz{grid-column:1/-1;position:relative;margin:8px -16px 0;padding:8px 16px 6px;background:rgba(255,255,255,.72);border-top:1px solid #d8dfe2}.ds-mrz-lines{font-family:\"OCR-B\",ui-monospace,monospace;font-size:14px;line-height:1.4;letter-spacing:.1em;white-space:pre;overflow:hidden}.ds-micro{margin-top:4px;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#566273}"
+    },
+    {
+      "name": "Data Table",
+      "kind": "custom",
+      "description": "Hairline-ruled table with uppercase header labels and OCR-B login IDs under names.",
+      "html": "<div class=\"ds-table\"><table><thead><tr><th>User</th><th>Type</th><th>Verified</th></tr></thead><tbody><tr><td><div class=\"ds-ct\">Aishath Ahmed</div><div class=\"ds-cs\">A000111</div></td><td><span class=\"ds-badge\">Maldivian</span></td><td class=\"ds-ok\">Verified, Biometric</td></tr><tr><td><div class=\"ds-ct\">John Smith</div><div class=\"ds-cs\">WP123456</div></td><td><span class=\"ds-badge\">Work Permit</span></td><td class=\"ds-off\">Not verified</td></tr></tbody></table></div>",
+      "css": ".ds-table{background:#fff;border:1px solid #d8dfe2;border-radius:12px;overflow:hidden;font-family:\"Segoe UI\",system-ui,sans-serif;color:#14213d}.ds-table table{width:100%;border-collapse:collapse}.ds-table th{text-align:left;padding:10px 16px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#566273;background:#f8faf9;border-bottom:1px solid #d8dfe2}.ds-table td{padding:10px 16px;font-size:14px;border-bottom:1px solid #d8dfe2}.ds-table tr:last-child td{border-bottom:none}.ds-table tbody tr:hover td{background:#f9fbfa}.ds-ct{font-weight:600}.ds-cs{font-family:\"OCR-B\",ui-monospace,monospace;font-size:13px;letter-spacing:.04em;color:#566273;margin-top:2px}.ds-badge{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:#e6edf7;color:#0c3170}.ds-ok{color:#1f6f75;font-weight:600}.ds-off{color:#566273}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Security-Printed Document",
+    "overview": "neFaas is set in the fine-line security print of Maldivian ID cards and passports. Every test user is an identity document: a card with a guilloche rosette, a photo slot, an OCR-B identifier, and a two-line machine-readable zone built from the user's real claims. Around those documents sits a working tool in plain daylight: an eFaas-blue top bar carrying a faint white guilloche band, a pale security-paper ground, and white work surfaces with hairline borders.\n\nThe system is quiet, light, and dense enough to operate quickly. The ornament lives in exactly two places, the top bar band and the identity cards, and is drawn as hairline line-work, never as illustration. Everything else is tables, definition lists, forms, and cards in the system sans. It rejects the stat-card SaaS admin dashboard, the dark terminal look, and anything playful; it stays visibly connected to the official eFaas service through the blue, the logo, and an eFaas-style login.\n\nThree pages share the palette at different fidelity: the home page (the full system), the login page (kept close to the real eFaas login by brand commitment, sharing the blue and the paper ground), and the logged-out/error message pages (a single centered card with a blue top rule).",
+    "keyCharacteristics": [
+      "eFaas blue shell, white guilloche band at 14% opacity behind logo and tabs.",
+      "Pale green-grey security paper ground; white surfaces with 1px hairline borders.",
+      "Identity cards as the signature: rosette guilloche, OCR-B ID, MRZ strip, microprint line.",
+      "OCR-B only for identifiers and the MRZ; the system sans for everything else.",
+      "One status ramp (teal / amber / red) used for verified states, HTTP methods, and errors.",
+      "Flat surfaces; shadow is reserved for the modal and the navbar's bottom hairline."
+    ],
+    "rules": [
+      {
+        "name": "The One Ramp Rule",
+        "body": "Status colors come from one fixed ramp: teal for ok, amber for warn, red for danger, each with its tint. Method tags, verified states and errors all draw from it; no other status hues exist.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Teals Rule",
+        "body": "Verified Teal carries meaning (verified, GET); Guilloche Teal is decoration ink for the rosette. Never swap them: the verified state uses the darker teal so it reads as text at AA contrast.",
+        "section": "colors"
+      },
+      {
+        "name": "The OCR-B Rule",
+        "body": "OCR-B is reserved for identifiers and the MRZ. Names, dates, verification values, labels and all other data use the sans; numeric values use tabular-nums.",
+        "section": "typography"
+      },
+      {
+        "name": "The Thaana Rule",
+        "body": "Dhivehi names render in their own line (lang=\"dv\", direction: rtl, unicode-bidi: plaintext) at 14px in ink-2, and are omitted entirely when the user has none. Never show an empty Dhivehi slot.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline Rule",
+        "body": "Surfaces on the home page separate by a 1px line, never by shadow. The only lift is a 1px rise on identity-card hover.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do set ID numbers and the MRZ in OCR-B, and every other value (names, dates, verification) in the system sans.",
+      "Do use Verified Teal for verified and ok states, and the one status ramp for every status or method color.",
+      "Do keep guilloche line-work to the top bar band and identity cards, drawn as hairline strokes in currentColor at low opacity.",
+      "Do separate surfaces with 1px hairlines on the paper ground; reserve shadow for modals.",
+      "Do give every identity card its MRZ strip and microprint line marking it a test identity.",
+      "Do keep the login page resembling the real eFaas login, sharing eFaas blue."
+    ],
+    "donts": [
+      "Don't build a stat-card SaaS admin dashboard, a dark terminal look, or anything playful (mascots, jokes, decorative illustration).",
+      "Don't use OCR-B for names, labels, or body text.",
+      "Don't use Guilloche Teal for meaning or Verified Teal for decoration.",
+      "Don't add a small uppercase label above names or headings on identity cards.",
+      "Don't render an empty Dhivehi line when a user has no Dhivehi name.",
+      "Don't lay identity-card meta out as loose inline text; keep it on its three-column grid."
+    ]
+  }
+}

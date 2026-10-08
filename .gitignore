@@ -39,3 +39,8 @@ docs/*
 .claude/
 # neFaas saved state (contains the signing key)
 .nefaas
+
+# impeccable working files
+.impeccable/review
+.impeccable/mocks
+.impeccable/questions
