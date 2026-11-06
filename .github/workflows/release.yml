@@ -7,16 +7,24 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-permissions:
-  contents: write
-  pull-requests: write
-  packages: write
+env:
+  IMAGE: ghcr.io/ayarse/mock-efaas-server
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      has-changesets: ${{ steps.changesets.outputs.hasChangesets }}
+      version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
 
@@ -30,14 +38,111 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish to GHCR
+      - name: Read image version
+        id: version
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          VERSION=$(jq -r .version package.json)
-          IMAGE=ghcr.io/ayarse/mock-efaas-server
+          VERSION=$(jq -er '.version | strings | select(length > 0)' package.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+  build:
+    needs: release
+    if: needs.release.outputs.has-changesets == 'false'
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-26.04
+          - arch: arm64
+            runner: ubuntu-26.04-arm
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
-          docker build -t $IMAGE:$VERSION -t $IMAGE:latest .
-          docker push $IMAGE:$VERSION
-          docker push $IMAGE:latest
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push by digest
+        id: image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          platforms: linux/${{ matrix.arch }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+
+      - name: Smoke-test OIDC discovery
+        env:
+          DIGEST: ${{ steps.image.outputs.digest }}
+        run: |
+          CONTAINER=$(docker run -d -p 127.0.0.1:36445:36445 "$IMAGE@$DIGEST")
+          trap 'docker rm -f "$CONTAINER" >/dev/null' EXIT
+
+          curl --fail --silent --show-error \
+            --retry 10 --retry-all-errors --retry-delay 1 --max-time 5 \
+            http://127.0.0.1:36445/.well-known/openid-configuration \
+            | jq -e '.issuer == "http://localhost:36445"'
+
+      - name: Record image digest
+        env:
+          ARCH: ${{ matrix.arch }}
+          DIGEST: ${{ steps.image.outputs.digest }}
+        run: printf '%s\n' "$DIGEST" > "$ARCH.digest"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: digest-${{ matrix.arch }}
+          path: ${{ matrix.arch }}.digest
+          if-no-files-found: error
+
+  publish:
+    needs: [release, build]
+    runs-on: ubuntu-26.04
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: digest-*
+          path: digests
+          merge-multiple: true
+
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish multi-platform image
+        env:
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          AMD64_DIGEST=$(cat digests/amd64.digest)
+          ARM64_DIGEST=$(cat digests/arm64.digest)
+
+          docker buildx imagetools create --dry-run \
+            "$IMAGE@$AMD64_DIGEST" \
+            "$IMAGE@$ARM64_DIGEST" |
+            jq -e '
+              [.manifests[].platform | select(.os == "linux") | .architecture]
+              | (index("amd64") != null and index("arm64") != null)
+            ' >/dev/null
+
+          docker buildx imagetools create \
+            --tag "$IMAGE:$VERSION" \
+            --tag "$IMAGE:latest" \
+            "$IMAGE@$AMD64_DIGEST" \
+            "$IMAGE@$ARM64_DIGEST"
+
+          docker buildx imagetools inspect "$IMAGE:$VERSION"
